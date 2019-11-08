@@ -4,6 +4,7 @@ import com.github.hib.entity.PersonEntity;
 import com.github.hib.entity.PersonDetails;
 import com.github.hib.util.EntityManagerUtil;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
@@ -29,6 +30,7 @@ public class OneToOneTest {
     }
 
     @Test
+    @Disabled
     public void mergeCascadeTest() {
         PersonEntity person = new PersonEntity(null, "log", "pass", null, null);
         PersonDetails personDetails = new PersonDetails(null, "Sadovaya", "Minsk", "", "Belarus", person);

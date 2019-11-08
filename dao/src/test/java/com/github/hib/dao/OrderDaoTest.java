@@ -5,9 +5,7 @@ import com.github.hib.dao.impl.DefaultOrderDao;
 import com.github.hib.entity.Address;
 import com.github.hib.entity.BookingEntity;
 import com.github.hib.util.EntityManagerUtil;
-import com.github.model.Order;
 import org.hibernate.Session;
-import org.hibernate.internal.CriteriaImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

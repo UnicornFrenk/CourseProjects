@@ -5,9 +5,7 @@ import com.github.hib.dao.converters.ItemConverter;
 import com.github.hib.entity.CategoryEntity;
 import com.github.hib.entity.ItemEntity;
 import com.github.hib.util.EntityManagerUtil;
-import com.github.model.Category;
 import com.github.model.Item;
-import org.hibernate.Cache;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -22,7 +20,8 @@ import java.util.stream.Collectors;
 
 public class DefaultItemDao implements ItemDao {
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultItemDao.class);
+    private static final Logger log = LoggerFactory.getLogger(
+            DefaultItemDao.class);
 
     private static class SingletonHolder {
         static final ItemDao HOLDER_INSTANCE = new DefaultItemDao();
@@ -34,16 +33,20 @@ public class DefaultItemDao implements ItemDao {
 
 
     @Override
-    public Item createItem(Item item1) {
-        Session session = EntityManagerUtil.getEntityManager();
+    public Item createItem(Item item1, Integer categoryId) {
         ItemEntity item = new ItemEntity();
-       // CategoryEntity category = new CategoryEntity();
         item.setId(item1.getId());
         item.setName(item1.getItemName());
         item.setDescription(item1.getItemDescription());
         item.setQuantity(item1.getItemQuantity());
         item.setPrice(item1.getPriceForOne());
-        //item.setCategory(category);
+
+
+        Session session = EntityManagerUtil.getEntityManager();
+        CategoryEntity category = session.get(CategoryEntity.class, categoryId);
+        item.setCategory(category);
+
+        category.getItems().add(item);
         session.beginTransaction();
         session.save(item);
         session.getTransaction().commit();
@@ -56,7 +59,8 @@ public class DefaultItemDao implements ItemDao {
     public Item readItem(String item_name) {
         ItemEntity iEntity;
         try {
-            iEntity = readItemEntity(EntityManagerUtil.getEntityManager(), item_name);
+            iEntity = readItemEntity(EntityManagerUtil.getEntityManager(),
+                                     item_name);
         } catch (NoResultException e) {
             log.info("item not found by name{}", item_name);
             iEntity = null;
@@ -66,18 +70,25 @@ public class DefaultItemDao implements ItemDao {
 
     @Override
     public Item readItem(Integer id) {
-        ItemEntity iEntity;
+        Item item;
         try {
-            iEntity = EntityManagerUtil.getEntityManager().get(ItemEntity.class, id);
+            Session session = EntityManagerUtil.getEntityManager();
+            session.beginTransaction();
+            ItemEntity iEntity = session.get(ItemEntity.class, id);
+            item = ItemConverter.fromEntity(iEntity);
+            session.getTransaction().commit();
         } catch (NoResultException e) {
             log.info("item not found by id{}", id);
-            iEntity = null;
+            item = null;
         }
-        return ItemConverter.fromEntity(iEntity);
+        return item;
     }
 
     private ItemEntity readItemEntity(Session entityManager, String item_name) {
-        return (ItemEntity) entityManager.createQuery("from ItemEntity i where i.name = :name").setParameter("name", item_name).getSingleResult();
+        return (ItemEntity) entityManager.createQuery(
+                "from ItemEntity i where i.name = :name")
+                                         .setParameter("name", item_name)
+                                         .getSingleResult();
     }
 
 
@@ -124,8 +135,8 @@ public class DefaultItemDao implements ItemDao {
             Session session = EntityManagerUtil.getEntityManager().getSession();
             session.beginTransaction();
             session.createQuery("delete from ItemEntity i where i.id = :id")
-                    .setParameter("id", id)
-                    .executeUpdate();
+                   .setParameter("id", id)
+                   .executeUpdate();
             session.getTransaction().commit();
         } catch (NoResultException e) {
             log.info("item not found by id{}", id);
@@ -141,8 +152,13 @@ public class DefaultItemDao implements ItemDao {
 
     @Override
     public List<Item> getAll() {
-        final List<ItemEntity> itemEntities = EntityManagerUtil.getEntityManager().createQuery("from ItemEntity ").list();
-        return itemEntities.stream().map(ItemConverter::fromEntity).collect(Collectors.toList());
+        final List<ItemEntity> itemEntities = EntityManagerUtil.getEntityManager()
+                                                               .createQuery(
+                                                                       "from ItemEntity ")
+                                                               .list();
+        return itemEntities.stream()
+                           .map(ItemConverter::fromEntity)
+                           .collect(Collectors.toList());
 
     }
 
@@ -153,20 +169,23 @@ public class DefaultItemDao implements ItemDao {
         Query query = session.createQuery("from ItemEntity i");
 
         return query.setMaxResults(pageSize)
-                .setFirstResult((page-1) * pageSize)
-                .getResultList();
+                    .setFirstResult((page - 1) * pageSize)
+                    .getResultList();
     }
 
     @Override
     public long getCountOfItems() {
-        CriteriaBuilder cb = EntityManagerUtil.getEntityManager().getCriteriaBuilder();
+        CriteriaBuilder cb = EntityManagerUtil.getEntityManager()
+                                              .getCriteriaBuilder();
         CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
         Root<ItemEntity> list = criteria.from(ItemEntity.class);
         if (list != null) {
             criteria.select(cb.count(list));
         }
         try {
-            return EntityManagerUtil.getEntityManager().createQuery(criteria).getSingleResult();
+            return EntityManagerUtil.getEntityManager()
+                                    .createQuery(criteria)
+                                    .getSingleResult();
         } catch (NoResultException e) {
             return 0L;
         }

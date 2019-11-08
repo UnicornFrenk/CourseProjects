@@ -284,11 +284,6 @@ public class HQLTestPerson {
                     .getResultList();
         }
 
-        @AfterAll
-        public static void cleanUp() {
-            EntityManagerUtil.closeEMFactory();
-        }
-
 
     }
 

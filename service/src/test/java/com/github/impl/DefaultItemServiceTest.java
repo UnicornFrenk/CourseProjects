@@ -1,12 +1,7 @@
 package com.github.impl;
 
 import com.github.hib.dao.ItemDao;
-import com.github.hib.dao.converters.ItemConverter;
-import com.github.hib.dao.impl.DefaultItemDao;
-import com.github.hib.entity.ItemEntity;
-import com.github.hib.util.EntityManagerUtil;
 import com.github.model.Item;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,14 +10,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.longThat;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -44,9 +37,9 @@ public class DefaultItemServiceTest {
     @Test
     public void createItemTest() {
         Item item = new Item(3,"nuts", "nuts", 1000, 500);
-        when(dao.createItem(item)).thenReturn(item);
+        when(dao.createItem(item, 1)).thenReturn(item);
 
-        Item itemFromDb = service.createItem(item);
+        Item itemFromDb = service.createItem(item, 1);
         System.out.println(itemFromDb);
         assertNotNull(itemFromDb);
         assertEquals(item.getItemName(), itemFromDb.getItemName());

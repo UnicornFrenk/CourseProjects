@@ -10,17 +10,18 @@ import com.github.model.Person;
 import org.hibernate.Session;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.omg.CORBA.PERSIST_STORE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class PersonDaoTest {
 
     private PersonEntity savePerson() {
         Session session = EntityManagerUtil.getEntityManager();
-        PersonEntity person = new PersonEntity("Matew", "mmm");
+        String name = "Matew" + ThreadLocalRandom.current().nextInt();
+        PersonEntity person = new PersonEntity(name, "mmm");
         session.beginTransaction();
         session.save(person);
         session.getTransaction().commit();

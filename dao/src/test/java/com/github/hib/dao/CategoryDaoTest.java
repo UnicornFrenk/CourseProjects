@@ -9,13 +9,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CategoryDaoTest {
 
 
     private CategoryEntity saveCategory() {
         Session session = EntityManagerUtil.getEntityManager();
-        CategoryEntity category = new CategoryEntity("kiwi");
+        String name = "kiwi" + ThreadLocalRandom.current().nextInt();
+        CategoryEntity category = new CategoryEntity(name);
         session.beginTransaction();
         session.save(category);
         session.getTransaction().commit();
@@ -28,7 +30,6 @@ public class CategoryDaoTest {
     public void read() {
         final CategoryEntity category = saveCategory();
         DefaultCategoryDao.getInstance().readCategory(category.getNameCategory());
-        System.out.println(category);
 
         Assertions.assertNotNull(category.getNameCategory());
     }
@@ -39,7 +40,8 @@ public class CategoryDaoTest {
 
         DefaultCategoryDao.getInstance().updateCategory("tasty", category.getIdCategory());
 
-        Category categoryFromDb = DefaultCategoryDao.getInstance().readCategory(category.getNameCategory());
+        Category categoryFromDb =
+                DefaultCategoryDao.getInstance().readCategory("tasty");
         System.out.println(categoryFromDb);
         Assertions.assertEquals("tasty", categoryFromDb.getNameCategory());
     }

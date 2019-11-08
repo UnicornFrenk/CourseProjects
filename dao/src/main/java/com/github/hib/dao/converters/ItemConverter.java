@@ -2,6 +2,7 @@ package com.github.hib.dao.converters;
 
 import com.github.hib.entity.CategoryEntity;
 import com.github.hib.entity.ItemEntity;
+import com.github.model.Category;
 import com.github.model.Item;
 
 public class ItemConverter {
@@ -23,7 +24,15 @@ public class ItemConverter {
         if (itemEntity == null) {
             return null;
         }
-        return new Item(itemEntity.getId(), itemEntity.getName(), itemEntity.getDescription(),itemEntity.getQuantity(), itemEntity.getPrice());
+        CategoryEntity category2 = itemEntity.getCategory();
+        String category = null;
+        if (category2 != null) {
+
+            category = CategoryConverter.fromEntity(category2).getNameCategory();
+        }
+        return new Item(itemEntity.getId(), itemEntity.getName(),
+                        itemEntity.getDescription(), itemEntity.getQuantity(),
+                        category, itemEntity.getPrice());
 
     }
 }

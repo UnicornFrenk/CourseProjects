@@ -46,8 +46,4 @@ public class ManyToManyTest {
 
     }
 
-    @AfterAll
-    public static void cleanUp() {
-        EntityManagerUtil.closeEMFactory();
-    }
 }

@@ -195,11 +195,6 @@ public class HQLTestItem {
                     .getResultList();
         }
 
-        @AfterAll
-        public static void cleanUp() {
-            EntityManagerUtil.closeEMFactory();
-        }
-
 
     }
 

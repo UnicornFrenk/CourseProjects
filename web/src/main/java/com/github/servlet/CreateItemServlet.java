@@ -28,8 +28,10 @@ public class CreateItemServlet extends HttpServlet {
         String description = rq.getParameter("description");
         Integer quantity = Integer.valueOf(rq.getParameter("quantity"));
         Integer price = Integer.valueOf(rq.getParameter("price"));
+        Integer categoryId = Integer.valueOf(rq.getParameter("categoryId"));
 
-        Item item = DefaultItemService.getInstance().createItem(new Item( name, description, quantity, price));
+        Item item1 = new Item(name, description, quantity, price);
+        Item item = DefaultItemService.getInstance().createItem(item1, categoryId);
 
         if (item != null) {
             rq.getSession().setAttribute("item", item);

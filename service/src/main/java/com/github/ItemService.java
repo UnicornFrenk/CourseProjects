@@ -1,13 +1,12 @@
 package com.github;
 
-import com.github.hib.entity.ItemEntity;
 import com.github.model.Item;
 
 import java.util.List;
 
 public interface ItemService {
 
-    Item createItem(Item item);
+    Item createItem(Item item, Integer categoryId);
 
     Item readItem(String item_name);
     Item readItem(Integer id);

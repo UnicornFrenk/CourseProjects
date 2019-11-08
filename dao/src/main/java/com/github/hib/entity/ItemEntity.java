@@ -2,6 +2,8 @@ package com.github.hib.entity;
 
 
 import lombok.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "item")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +48,7 @@ public class ItemEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "category_Id", insertable=false, updatable=false)
+    @JoinColumn(name = "category_Id")
     private CategoryEntity category;
 
     public CategoryEntity getCategory() {
@@ -73,6 +76,6 @@ public class ItemEntity {
 
     @Override
     public String toString() {
-        return "ItemEntity{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", quantity=" + quantity + ", price=" + price + ", category=" + category + '}';
+        return "ItemEntity{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", quantity=" + quantity + ", price=" + price + ", category="  + '}';
     }
 }

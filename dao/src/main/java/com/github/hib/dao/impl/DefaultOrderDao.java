@@ -17,7 +17,8 @@ import java.util.stream.Collectors;
 public class DefaultOrderDao implements OrderDao {
 
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultItemDao.class);
+    private static final Logger log = LoggerFactory.getLogger(
+            DefaultItemDao.class);
 
     private static class SingletonHolder {
         static final OrderDao HOLDER_INSTANCE = new DefaultOrderDao();
@@ -30,7 +31,10 @@ public class DefaultOrderDao implements OrderDao {
 
     @Override
     public Integer createOrder(Order order) {
-        BookingEntity oEntity = new BookingEntity(order.getId(),order.getItem_id(), order.getUser_Id(),order.getDeliveryAddress());
+        BookingEntity oEntity = new BookingEntity(order.getId(),
+                                                  order.getItem_id(),
+                                                  order.getUser_Id(),
+                                                  order.getDeliveryAddress());
         final Session session = EntityManagerUtil.getEntityManager();
         session.beginTransaction();
         session.save(oEntity);
@@ -42,11 +46,11 @@ public class DefaultOrderDao implements OrderDao {
     public Order readOrder(int id) {
         BookingEntity oEntity;
         try {
-            oEntity = (BookingEntity) EntityManagerUtil
-                    .getEntityManager()
-                    .createQuery("from BookingEntity o where o.id = :id")
-                    .setParameter("id", id)
-                    .getSingleResult();
+            oEntity = (BookingEntity) EntityManagerUtil.getEntityManager()
+                                                       .createQuery(
+                                                               "from BookingEntity o where o.id = :id")
+                                                       .setParameter("id", id)
+                                                       .getSingleResult();
         } catch (NoResultException e) {
             log.info("order not found by id{}", id);
             oEntity = null;
@@ -58,11 +62,12 @@ public class DefaultOrderDao implements OrderDao {
     public Order getOrderByPersonLogin(String login) {
         BookingEntity oEntity;
         try {
-            oEntity = (BookingEntity) EntityManagerUtil
-                    .getEntityManager()
-                    .createQuery("from BookingEntity o join PersonEntity p on p.id=o.user_Id where p.login = :login")
-                    .setParameter("login", login)
-                    .getSingleResult();
+            oEntity = (BookingEntity) EntityManagerUtil.getEntityManager()
+                                                       .createQuery(
+                                                               "from BookingEntity o join PersonEntity p on p.id=o.user_Id where p.login = :login")
+                                                       .setParameter("login",
+                                                                     login)
+                                                       .getSingleResult();
         } catch (NoResultException e) {
             log.info("person not found by login{}", login);
             oEntity = null;
@@ -73,12 +78,12 @@ public class DefaultOrderDao implements OrderDao {
     @Override
     public void updateOrder(int id, Address address) {
         try {
-         EntityManagerUtil
-                    .getEntityManager()
-                    .createQuery("update BookingEntity o set o.deliveryAddress = :address where o.user_Id = :id")
-                    .setParameter("id", id)
-                    .setParameter("address", address)
-                    .executeUpdate();
+            EntityManagerUtil.getEntityManager()
+                             .createQuery(
+                                     "update BookingEntity o set o.deliveryAddress = :address where o.user_Id = :id")
+                             .setParameter("id", id)
+                             .setParameter("address", address)
+                             .executeUpdate();
         } catch (NoResultException e) {
             log.info("user not found by login{}", id);
         }
@@ -86,28 +91,27 @@ public class DefaultOrderDao implements OrderDao {
 
     @Override
     public void deleteOrder(int id) {
-        try{
-        Session session = EntityManagerUtil.getEntityManager().getSession();
-        session.beginTransaction();
-        session.createQuery("delete from BookingEntity b where b.id = :id")
-                .setParameter("id", id)
-                .executeUpdate();
-        session.getTransaction().commit();
-        session.close();
-    }
-        catch (NoResultException e) {
+        try {
+            Session session = EntityManagerUtil.getEntityManager().getSession();
+            session.beginTransaction();
+            session.createQuery("delete from BookingEntity b where b.id = :id")
+                   .setParameter("id", id)
+                   .executeUpdate();
+            session.getTransaction().commit();
+            session.close();
+        } catch (NoResultException e) {
             log.info("order not found by id{}", id);
         }
     }
 
     @Override
     public List<Order> getAll() {
-        final List<BookingEntity> orders = EntityManagerUtil
-                .getEntityManager()
-                .createQuery("from BookingEntity ")
-                .list();
+        final List<BookingEntity> orders = EntityManagerUtil.getEntityManager()
+                                                            .createQuery(
+                                                                    "from BookingEntity ")
+                                                            .list();
         return orders.stream()
-                .map(BookingConverter::fromEntity)
-                .collect(Collectors.toList());
+                     .map(BookingConverter::fromEntity)
+                     .collect(Collectors.toList());
     }
 }

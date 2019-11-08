@@ -3,7 +3,6 @@ package com.github.impl;
 import com.github.ItemService;
 import com.github.hib.dao.ItemDao;
 import com.github.hib.dao.impl.DefaultItemDao;
-import com.github.hib.entity.ItemEntity;
 import com.github.model.Item;
 
 import java.util.List;
@@ -24,9 +23,9 @@ public class DefaultItemService implements ItemService {
     }
 
     @Override
-    public Item createItem(Item item) {
+    public Item createItem(Item item, Integer categoryId) {
         return itemDao
-                .createItem(item);
+                .createItem(item, categoryId);
     }
 
     @Override
