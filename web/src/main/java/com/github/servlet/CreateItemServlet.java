@@ -1,6 +1,9 @@
 package com.github.servlet;
 
+import com.github.CategoryService;
+import com.github.impl.DefaultCategoryService;
 import com.github.impl.DefaultItemService;
+import com.github.model.Category;
 import com.github.model.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/createitem")
 public class CreateItemServlet extends HttpServlet {
@@ -18,6 +22,8 @@ public class CreateItemServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(ItemsServlet.class);
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Category> categories = DefaultCategoryService.getInstance().getAll();
+        request.setAttribute("categories", categories);
         request.getRequestDispatcher("/createitem.jsp").forward(request, response);
     }
 

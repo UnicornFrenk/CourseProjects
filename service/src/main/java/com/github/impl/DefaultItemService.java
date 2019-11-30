@@ -17,21 +17,17 @@ public class DefaultItemService implements ItemService {
     }
 
     public static ItemService getInstance() {
-        return DefaultItemService
-                .SingletonHolder
-                .HOLDER_INSTANCE;
+        return DefaultItemService.SingletonHolder.HOLDER_INSTANCE;
     }
 
     @Override
     public Item createItem(Item item, Integer categoryId) {
-        return itemDao
-                .createItem(item, categoryId);
+        return itemDao.createItem(item, categoryId);
     }
 
     @Override
     public Item readItem(String item_name) {
-        return itemDao
-                .readItem(item_name);
+        return itemDao.readItem(item_name);
     }
 
     @Override
@@ -40,14 +36,14 @@ public class DefaultItemService implements ItemService {
     }
 
     @Override
-    public void updateItem(Integer price, String  name) {
-        itemDao.updateItem(price,name);
+    public void updateItem(Integer price, String name) {
+        itemDao.updateItem(price, name);
     }
 
 
     @Override
     public void updateItem(Integer price, Integer id) {
-        itemDao.updateItem(price,id);
+        itemDao.updateItem(price, id);
     }
 
     @Override
@@ -66,8 +62,14 @@ public class DefaultItemService implements ItemService {
         return itemDao.getPage(page);
     }
 
-    public Long countOfPage(){
-        return itemDao.getCountOfItems() / getMaxResult() + 1;
+    public Long countOfPage() {
+        long countOfItems = itemDao.getCountOfItems();
+
+        long l = countOfItems % getMaxResult();
+        if (l != 0) {
+            return countOfItems / getMaxResult() + 1;
+        }
+        return countOfItems / getMaxResult();
     }
 
     private Integer getMaxResult() {

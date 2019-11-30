@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Create Item</title>
@@ -20,19 +22,28 @@
             <td>Name</td>
             <td>Description</td>
             <td>Total Quantity</td>
+            <td>Category</td>
             <td>Price For One</td>
 
 
         </tr>
         <tr>
-            <td><input type="text" name="name" value="${item.itemName}"></td>
-            <td><input type="text" name="description" value="${item.itemDescription}"></td>
-            <td><input type="text" name="quantity" value="${item.itemQuantity}"></td>
-            <td><input type="text" name="price" value="${item.priceForOne}"></td>
+            <td><input type="text" name="name"></td>
+            <td><input type="text" name="description"></td>
+            <td><input type="text" name="quantity">
+            </td>
+            <td><select name="categoryId">
+                <c:forEach items="${categories}" var="cat">
+                    <option value="${cat.idCategory}">${cat.nameCategory}</option>
+                </c:forEach>
+            </select></td>
+            <td><input type="text" name="price" >
+            </td>
         </tr>
     </table>
 
-    <button type="submit" name="create">create</button></form>
+    <button type="submit" name="create">create</button>
+</form>
 </form>
 </body>
 </html>
