@@ -10,6 +10,7 @@ import com.github.hib.util.EntityManagerUtil;
 import com.github.model.Category;
 import com.github.model.Item;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,14 +23,12 @@ import java.util.stream.Collectors;
 public class DefaultCategoryDao implements CategoryDao {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultItemDao.class);
+    private final SessionFactory sessionFactory;
 
-    private static class SingletonHolder {
-        static final CategoryDao HOLDER_INSTANCE = new DefaultCategoryDao();
+    public DefaultCategoryDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
-    public static CategoryDao getInstance() {
-        return DefaultCategoryDao.SingletonHolder.HOLDER_INSTANCE;
-    }
 
     @Override
     public Category createCategory(Category category) {

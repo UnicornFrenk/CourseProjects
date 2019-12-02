@@ -35,21 +35,6 @@ public class DefaultOrderServiceTest {
     @InjectMocks
     DefaultOrderService service;
 
-    @Test
-    public void getInstance() {
-        DefaultOrderService.getInstance();
-    }
-
-//    @Test
-//    public void createOrder() {
-//        PersonEntity person = new PersonEntity();
-//        ItemEntity item = new ItemEntity();
-//        BookingEntity order = new BookingEntity(person.getId(), item.getId());
-//        when(dao.createOrder(order)).thenReturn(order.getId());
-//        service.getInstance().createOrder(order);
-//        assertNotNull(order);
-//    }
-
 
     @Test
     public void testOrderNotExist() {

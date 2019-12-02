@@ -7,6 +7,7 @@ import com.github.hib.entity.BookingEntity;
 import com.github.hib.util.EntityManagerUtil;
 import com.github.model.Order;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,16 +20,12 @@ public class DefaultOrderDao implements OrderDao {
 
     private static final Logger log = LoggerFactory.getLogger(
             DefaultItemDao.class);
+    private final SessionFactory sessionFactory;
 
-    private static class SingletonHolder {
-        static final OrderDao HOLDER_INSTANCE = new DefaultOrderDao();
+
+    public DefaultOrderDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
-
-    public static OrderDao getInstance() {
-        return DefaultOrderDao.SingletonHolder.HOLDER_INSTANCE;
-    }
-
-
     @Override
     public Integer createOrder(Order order) {
         BookingEntity oEntity = new BookingEntity(order.getId(),

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="shop" template="/WEB-INF/view/layouts/default.jsp">
+
+        <put-attribute name="title" value="Shop homepage" />
+        <put-attribute name="header"
+                       value="/WEB-INF/view/common_view/header.jsp"/>
+        <put-attribute name="menu" value="menu.jsp" />
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/view/common_view/footer.jsp"/>
+    </definition>
+
+
+    <definition name="login" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/login.jspx"/>
+    </definition>
+
+    <definition name="registration" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/registration.jspx"/>
+    </definition>
+
+
+    <!--users-->
+
+    <definition name="authUser" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/authUser.jspx"/>
+    </definition>
+
+    <definition name="userpage" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/userpage.jspx"/>
+    </definition>
+
+    <definition name="users" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/users.jspx"/>
+    </definition>
+
+    <!--items-->
+
+    <definition name="createitem" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/createitem.jspx"/>
+    </definition>
+
+    <definition name="itemList" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/itemList.jspx"/>
+    </definition>
+
+    <definition name="itemlistadmin" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/itemlistadmin.jspx"/>
+    </definition>
+
+    <definition name="updateitem" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/updateitem.jspx"/>
+    </definition>
+
+    <!--orders-->
+
+    <definition name="createorder" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/createorder.jspx"/>
+    </definition>
+
+    <definition name="orders" extends="shop">
+        <put-attribute name="body" value="/WEB-INF/view/pages/orders.jspx"/>
+    </definition>
+</tiles-definitions>

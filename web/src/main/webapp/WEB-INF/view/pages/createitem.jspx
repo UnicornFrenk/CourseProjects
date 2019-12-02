@@ -1,0 +1,39 @@
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:sec="http://www.springframework.org/security/tags"
+          version="2.0">
+
+    <h2>Creating new item</h2>
+    <c:set var="item"/>
+    <form method="post" action="${pageContext.request.contextPath}/createitem">
+        <table border="2">
+            <tr>
+
+                <td>Name</td>
+                <td>Description</td>
+                <td>Total Quantity</td>
+                <td>Category</td>
+                <td>Price For One</td>
+
+
+            </tr>
+            <tr>
+                <td><input type="text" name="name"/></td>
+                <td><input type="text" name="description"/></td>
+                <td><input type="text" name="quantity"/>
+                </td>
+                <td><select name="categoryId">
+                    <c:forEach items="${categories}" var="cat">
+                        <option value="${cat.idCategory}">${cat.nameCategory}</option>
+                    </c:forEach>
+                </select></td>
+                <td><input type="text" name="price"/>
+                </td>
+            </tr>
+        </table>
+
+        <button type="submit" name="create">create</button>
+    </form>
+
+</jsp:root>

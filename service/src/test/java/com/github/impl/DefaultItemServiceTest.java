@@ -29,10 +29,6 @@ public class DefaultItemServiceTest {
     @InjectMocks
     DefaultItemService service;
 
-    @Test
-    public void getInstance() {
-        DefaultItemService.getInstance();
-    }
 
     @Test
     public void createItemTest() {

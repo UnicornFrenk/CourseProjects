@@ -2,12 +2,12 @@ package com.github.hib.dao.impl;
 
 import com.github.hib.dao.converters.PersonConverter;
 import com.github.hib.dao.PersonDao;
-import com.github.hib.entity.BookingEntity;
 import com.github.hib.entity.PersonEntity;
 import com.github.hib.entity.Role;
 import com.github.hib.util.EntityManagerUtil;
 import com.github.model.Person;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,16 +22,14 @@ import java.util.stream.Collectors;
 
 public class DefaultPersonDao implements PersonDao {
     private static final Logger log = LoggerFactory.getLogger(DefaultPersonDao.class);
+    private final SessionFactory sessionFactory;
 
-    private static class SingletonHolder {
-        static final PersonDao HOLDER_INSTANCE = new DefaultPersonDao();
-    }
-
-    public static PersonDao getInstance() {
-        return DefaultPersonDao.SingletonHolder.HOLDER_INSTANCE;
+    public DefaultPersonDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
+    @Transactional
     public int createPerson(Person person) {
         PersonEntity pEntity = new PersonEntity(person.getId(), person.getLogin(),person.getPassword(), person.getRole(),null);
         final Session session = EntityManagerUtil.getEntityManager();
@@ -42,6 +40,7 @@ public class DefaultPersonDao implements PersonDao {
     }
 
     @Override
+    @Transactional
     public Person getByLogin(String login) {
 
         PersonEntity personEntity;
@@ -58,6 +57,7 @@ public class DefaultPersonDao implements PersonDao {
     }
 
     @Override
+    @Transactional
     public Person getByRole(Role role) {
         PersonEntity personEntity;
         try {
@@ -70,6 +70,7 @@ public class DefaultPersonDao implements PersonDao {
     }
 
     @Override
+    @Transactional
     public void updatePerson(String login, String pass) {
         pass = "www";
         try {

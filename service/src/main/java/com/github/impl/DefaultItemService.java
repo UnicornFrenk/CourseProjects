@@ -4,55 +4,62 @@ import com.github.ItemService;
 import com.github.hib.dao.ItemDao;
 import com.github.hib.dao.impl.DefaultItemDao;
 import com.github.model.Item;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.ResourceBundle;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class DefaultItemService implements ItemService {
 
-    private ItemDao itemDao = DefaultItemDao.getInstance();
+    private ItemDao itemDao;
 
-    private static class SingletonHolder {
-        static final ItemService HOLDER_INSTANCE = new DefaultItemService();
-    }
-
-    public static ItemService getInstance() {
-        return DefaultItemService.SingletonHolder.HOLDER_INSTANCE;
+    public DefaultItemService(ItemDao itemDao) {
+        this.itemDao = itemDao;
     }
 
     @Override
+    @Transactional
     public Item createItem(Item item, Integer categoryId) {
         return itemDao.createItem(item, categoryId);
     }
 
     @Override
+    @Transactional
     public Item readItem(String item_name) {
         return itemDao.readItem(item_name);
     }
 
     @Override
+    @Transactional
     public Item readItem(Integer id) {
         return itemDao.readItem(id);
     }
 
     @Override
+    @Transactional
     public void updateItem(Integer price, String name) {
         itemDao.updateItem(price, name);
     }
 
 
     @Override
+    @Transactional
     public void updateItem(Integer price, Integer id) {
         itemDao.updateItem(price, id);
     }
 
     @Override
+    @Transactional
     public void deleteItem(Integer id) {
         itemDao.deleteItem(id);
 
     }
 
     @Override
+    @Transactional
     public List<Item> getAll() {
         return itemDao.getAll();
     }

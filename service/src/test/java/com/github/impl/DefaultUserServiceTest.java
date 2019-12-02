@@ -40,11 +40,6 @@ public class DefaultUserServiceTest {
     DefaultPersonService personService;
 
     @Test
-    public void getInstance() {
-        service.getInstance();
-    }
-
-    @Test
     public void testLoginNotExist() {
         when(dao.getByLogin("ADMIN")).thenReturn(null);
 

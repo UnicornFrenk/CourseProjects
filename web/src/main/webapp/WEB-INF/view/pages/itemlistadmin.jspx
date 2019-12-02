@@ -1,0 +1,46 @@
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:sec="http://www.springframework.org/security/tags"
+          version="2.0">
+<body>
+<h3>Items list</h3>
+
+<table border="2">
+    <tr>
+        <td>id</td>
+        <td>Name</td>
+        <td>Description</td>
+        <td>Total Quantity</td>
+        <td>Price For One</td>
+        <td>Update</td>
+        <td>Delete</td>
+
+    </tr>
+    <c:forEach items="${items}" var="item">
+        <tr>
+            <td>${item.id}</td>
+            <td>${item.name}</td>
+            <td>${item.description}</td>
+            <td>${item.quantity}</td>
+            <td>${item.price}</td>
+            <td><a href="${pageContext.request.contextPath}/updateitem?id=${item.id}">update item</a></td>
+            <td>
+                <form method="post" action="${pageContext.request.contextPath}/deleteitem">
+                    <input hidden="true" type="number" name="del"
+                           value="${item.id}"/>
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+        </tr>
+    </c:forEach>
+</table>
+
+<c:forEach begin="1" end="${pageCount}" var="pageNumber">
+    <a href="${pageContext.request.contextPath}/itemlistadmin?pageNumber=${pageNumber}">${pageNumber}</a>
+</c:forEach>
+
+<button><a href="${pageContext.request.contextPath}/createitem">create new item</a></button>
+<br/>
+</body>
+</jsp:root>

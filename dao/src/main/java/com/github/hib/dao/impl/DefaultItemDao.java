@@ -7,6 +7,7 @@ import com.github.hib.entity.ItemEntity;
 import com.github.hib.util.EntityManagerUtil;
 import com.github.model.Item;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,15 +23,11 @@ public class DefaultItemDao implements ItemDao {
 
     private static final Logger log = LoggerFactory.getLogger(
             DefaultItemDao.class);
+    private final SessionFactory sessionFactory;
 
-    private static class SingletonHolder {
-        static final ItemDao HOLDER_INSTANCE = new DefaultItemDao();
+    public DefaultItemDao(SessionFactory sessionFactory) {
+        this.sessionFactory=sessionFactory;
     }
-
-    public static ItemDao getInstance() {
-        return DefaultItemDao.SingletonHolder.HOLDER_INSTANCE;
-    }
-
 
     @Override
     public Item createItem(Item item1, Integer categoryId) {

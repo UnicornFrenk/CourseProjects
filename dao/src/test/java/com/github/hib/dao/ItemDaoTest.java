@@ -1,5 +1,6 @@
 package com.github.hib.dao;
 
+import com.github.config.DaoConfig;
 import com.github.hib.dao.converters.CategoryConverter;
 import com.github.hib.dao.impl.DefaultCategoryDao;
 import com.github.hib.dao.impl.DefaultItemDao;
@@ -11,15 +12,26 @@ import com.github.model.Item;
 import org.hibernate.Session;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
+@Transactional
 public class ItemDaoTest {
 
-    CategoryDao categoryDao = DefaultCategoryDao.getInstance();
-    ItemDao itemDao = DefaultItemDao.getInstance();
+    @Autowired
+    CategoryDao categoryDao;
+
+    @Autowired
+    ItemDao itemDao;
 
     private ItemEntity saveItem() {
         Session session = EntityManagerUtil.getEntityManager();
@@ -52,7 +64,7 @@ public class ItemDaoTest {
     @Test
     public void readItem() {
         final ItemEntity itemEntity = saveItem();
-        Item fromDB = DefaultItemDao.getInstance().readItem(itemEntity.getId());
+        Item fromDB = itemDao.readItem(itemEntity.getId());
 
         Assertions.assertNotNull(fromDB);
     }
@@ -61,9 +73,9 @@ public class ItemDaoTest {
     public void updateItem() {
         ItemEntity testItem = saveItem();
 
-        DefaultItemDao.getInstance().updateItem(200, testItem.getId());
+       itemDao.updateItem(200, testItem.getId());
 
-        Item item = DefaultItemDao.getInstance().readItem(testItem.getId());
+        Item item = itemDao.readItem(testItem.getId());
         Assertions.assertEquals((Integer) 200, item.getPriceForOne());
     }
 
@@ -72,7 +84,7 @@ public class ItemDaoTest {
         final ItemEntity item = saveItem();
         System.out.println(item);
 
-        DefaultItemDao.getInstance().deleteItem(item.getId());
+        itemDao.deleteItem(item.getId());
 
         ItemEntity itemEntity = EntityManagerUtil.getEntityManager().find(ItemEntity.class, item.getId());
         System.out.println(itemEntity);
@@ -88,7 +100,7 @@ public class ItemDaoTest {
         list.add(i1);
         list.add(i2);
         list.add(i3);
-        List<Item> expected = DefaultItemDao.getInstance().getAll();
+        List<Item> expected = itemDao.getAll();
         System.out.println(expected);
         Assertions.assertNotNull(expected);
     }

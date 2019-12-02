@@ -35,14 +35,9 @@ public class DefaultCategoryServiceTest {
     DefaultCategoryService service;
 
     @Test
-    public void getInstance() {
-        DefaultCategoryService.getInstance();
-    }
-
-    @Test
     public void createCategoryTest() {
         Category category = new Category(null, "sweets");
-        service.getInstance().createCategory(category);
+        service.createCategory(category);
         String categoryFromDb = category.getNameCategory();
         String exp = "sweets";
 
