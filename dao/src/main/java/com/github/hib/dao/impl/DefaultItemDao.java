@@ -31,125 +31,72 @@ public class DefaultItemDao implements ItemDao {
 
     @Override
     public Item createItem(Item item1, Integer categoryId) {
-        ItemEntity item = new ItemEntity();
-        item.setId(item1.getId());
-        item.setName(item1.getItemName());
-        item.setDescription(item1.getItemDescription());
-        item.setQuantity(item1.getItemQuantity());
-        item.setPrice(item1.getPriceForOne());
+        ItemEntity itemEntity = ItemConverter.toEntity(item1);
+        itemEntity.setId(item1.getId());
+        itemEntity.setName(item1.getItemName());
+        itemEntity.setDescription(item1.getItemDescription());
+        itemEntity.setQuantity(item1.getItemQuantity());
+        itemEntity.setPrice(item1.getPriceForOne());
 
 
-        Session session = EntityManagerUtil.getEntityManager();
+        final Session session = sessionFactory.getCurrentSession();
         CategoryEntity category = session.get(CategoryEntity.class, categoryId);
-        item.setCategory(category);
+        itemEntity.setCategory(category);
 
-        category.getItems().add(item);
-        session.beginTransaction();
-        session.save(item);
-        session.getTransaction().commit();
-        System.out.println(item);
-        session.close();
-        return ItemConverter.fromEntity(item);
+        category.getItems().add(itemEntity);
+        session.save(itemEntity);
+        return ItemConverter.fromEntity(itemEntity);
     }
 
     @Override
     public Item readItem(String item_name) {
-        ItemEntity iEntity;
-        try {
-            iEntity = readItemEntity(EntityManagerUtil.getEntityManager(),
-                                     item_name);
-        } catch (NoResultException e) {
-            log.info("item not found by name{}", item_name);
-            iEntity = null;
-        }
+        final ItemEntity iEntity =
+                sessionFactory.getCurrentSession().get(ItemEntity.class, item_name);
         return ItemConverter.fromEntity(iEntity);
     }
 
     @Override
     public Item readItem(Integer id) {
-        Item item;
-        try {
-            Session session = EntityManagerUtil.getEntityManager();
-            session.beginTransaction();
-            ItemEntity iEntity = session.get(ItemEntity.class, id);
-            item = ItemConverter.fromEntity(iEntity);
-            session.getTransaction().commit();
-        } catch (NoResultException e) {
-            log.info("item not found by id{}", id);
-            item = null;
-        }
-        return item;
+        final ItemEntity itemEntity =
+        sessionFactory.getCurrentSession().get(ItemEntity.class, id);
+        return ItemConverter.fromEntity(itemEntity);
     }
-
-    private ItemEntity readItemEntity(Session entityManager, String item_name) {
-        return (ItemEntity) entityManager.createQuery(
-                "from ItemEntity i where i.name = :name")
-                                         .setParameter("name", item_name)
-                                         .getSingleResult();
-    }
-
 
     @Override
     public void updateItem(Integer price, String name) {
-        Session session = EntityManagerUtil.getEntityManager();
-        session.beginTransaction();
-        ItemEntity itemEntity = readItemEntity(session, name);
-        itemEntity.setPrice(price);
-        session.saveOrUpdate(itemEntity);
-        session.getTransaction().commit();
-        session.close();
-
-
-//   hql
-//        try (Session session = EntityManagerUtil.getEntityManager().getSession()) {
-//            session.beginTransaction();
-//            Integer id = DefaultItemDao.getInstance().readItem(name).getId();
-//            ItemEntity itemFromDB = session.get(ItemEntity.class, id);
-//            itemFromDB.setPrice(price);
-//            session.getTransaction().commit();
-//        } catch (RollbackException e) {
-//            log.warn("price: {}, name: {} ", price, name, e);
-//        }
-
+        final Session session = sessionFactory.getCurrentSession();
+        session.createQuery(
+                "update ItemEntity set price= :price where name =:name")
+               .setParameter("price", price)
+               .setParameter("name", name)
+               .executeUpdate();
     }
+
 
     @Override
     public void updateItem(Integer price, Integer id) {
-        Session session = EntityManagerUtil.getEntityManager();
-        session.beginTransaction();
-        ItemEntity itemEntity = session.get(ItemEntity.class, id);
-        itemEntity.setPrice(price);
-        session.saveOrUpdate(itemEntity);
-        session.getTransaction().commit();
-        session.close();
+        final Session session = sessionFactory.getCurrentSession();
+        session.createQuery(
+                "update ItemEntity set price= :price where id =:id")
+               .setParameter("price", price)
+               .setParameter("id", id)
+               .executeUpdate();
     }
 
 
     @Override
     public void deleteItem(Integer id) {
 
-        try {
-            Session session = EntityManagerUtil.getEntityManager().getSession();
-            session.beginTransaction();
-            session.createQuery("delete from ItemEntity i where i.id = :id")
-                   .setParameter("id", id)
-                   .executeUpdate();
-            session.getTransaction().commit();
-        } catch (NoResultException e) {
-            log.info("item not found by id{}", id);
-        }
-//        final ItemEntity item = new ItemEntity();
-//        Session session = EntityManagerUtil.getEntityManager();
-//        session.save(item);
-//        session.beginTransaction();
-//        session.get(ItemEntity.class, item.getId());
-//        session.delete(item);
-//        session.getTransaction().commit();
+        final Session session = sessionFactory.getCurrentSession();
+        session.createQuery(
+                "delete from ItemEntity i where i.id = :id")
+               .setParameter("id", id)
+               .executeUpdate();
     }
 
     @Override
     public List<Item> getAll() {
-        final List<ItemEntity> itemEntities = EntityManagerUtil.getEntityManager()
+        final List<ItemEntity> itemEntities = sessionFactory.getCurrentSession()
                                                                .createQuery(
                                                                        "from ItemEntity ")
                                                                .list();
@@ -162,7 +109,7 @@ public class DefaultItemDao implements ItemDao {
 
     public List<Item> getPage(int page) {
         int pageSize = 3;
-        Session session = EntityManagerUtil.getEntityManager();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from ItemEntity i");
 
         return query.setMaxResults(pageSize)
@@ -172,7 +119,7 @@ public class DefaultItemDao implements ItemDao {
 
     @Override
     public long getCountOfItems() {
-        CriteriaBuilder cb = EntityManagerUtil.getEntityManager()
+        CriteriaBuilder cb = sessionFactory.getCurrentSession()
                                               .getCriteriaBuilder();
         CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
         Root<ItemEntity> list = criteria.from(ItemEntity.class);
@@ -180,7 +127,7 @@ public class DefaultItemDao implements ItemDao {
             criteria.select(cb.count(list));
         }
         try {
-            return EntityManagerUtil.getEntityManager()
+            return sessionFactory.getCurrentSession()
                                     .createQuery(criteria)
                                     .getSingleResult();
         } catch (NoResultException e) {

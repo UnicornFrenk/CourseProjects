@@ -65,10 +65,12 @@ public class DefaultItemService implements ItemService {
     }
 
     @Override
+    @Transactional
     public List<Item> getPage(int page) {
         return itemDao.getPage(page);
     }
 
+    @Transactional
     public Long countOfPage() {
         long countOfItems = itemDao.getCountOfItems();
 

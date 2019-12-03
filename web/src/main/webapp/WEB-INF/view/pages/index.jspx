@@ -9,7 +9,6 @@
 
     <title><fmt:message key="login" bundle="${msg}"/></title>
 
-<%@include file="languages.jsp" %>
 <c:forEach var="user" items="user"/>
 <div class="form">
     <h1>Hi! We glad to see you!</h1><br>

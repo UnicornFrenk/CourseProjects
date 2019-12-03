@@ -1,6 +1,7 @@
 package com.github.servlet;
 
 
+import com.github.PersonService;
 import com.github.impl.DefaultPersonService;
 import com.github.model.Person;
 import org.slf4j.Logger;
@@ -21,10 +22,11 @@ public class RegistrationController extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(
             RegistrationController.class);
 
-    DefaultPersonService personService;
+    @Autowired
+    PersonService personService;
 
     @Autowired
-    public RegistrationController(DefaultPersonService personService) {
+    public RegistrationController(PersonService personService) {
         this.personService = personService;
     }
 

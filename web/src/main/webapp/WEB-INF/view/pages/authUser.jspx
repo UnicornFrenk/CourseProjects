@@ -4,20 +4,21 @@
           xmlns:sec="http://www.springframework.org/security/tags"
           version="2.0">
 
-        <h3 align="center">Hi, ${login} ! We glad to see you!</h3>
+    <h3 align="center">Hi, ${user.login} ! We glad to see you!</h3>
 
 
     <c:choose>
-        <c:when test="${login == 'ADMIN'}">
-            <a href="${pageContext.request.contextPath}/itemlistadmin">items</a>
-            <a href="${pageContext.request.contextPath}/users">users</a>
-            <a href="${pageContext.request.contextPath}/WEB-INF/index.jsp">logout</a>
+        <c:when test="${user.login == 'ADMIN'}">
+            <a href="${pageContext.request.contextPath}/itemlistadmin">items
+            </a><br/>
+            <a href="${pageContext.request.contextPath}/users">users</a><br/>
+            <a href="${pageContext.request.contextPath}/logout">logout</a>
 
             <br/>
         </c:when>
         <c:otherwise>
-            <a href="${pageContext.request.contextPath}/itemlist">items</a>
-
+            <a href="${pageContext.request.contextPath}/itemlist">items</a><br/>
+            <a href="${pageContext.request.contextPath}/logout">logout</a>
         </c:otherwise>
     </c:choose>
 

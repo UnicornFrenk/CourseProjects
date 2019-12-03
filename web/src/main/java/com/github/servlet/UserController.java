@@ -4,6 +4,7 @@ import com.github.PersonService;
 import com.github.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,13 +15,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
-@RequestMapping("/authUser")
+@RequestMapping("")
 public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(
             UserController.class);
 
-   // @Autowired
+    @Autowired
     private PersonService personService;
 
     public UserController(PersonService personService) {
@@ -81,7 +82,7 @@ public class UserController {
     public String showAllUsers(HttpServletRequest request) {
         List<Person> users = personService.getAll();
         request.setAttribute("users", users);
-        return "redirect:/users";
+        return "users";
     }
 
 }

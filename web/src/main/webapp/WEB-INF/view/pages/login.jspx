@@ -7,18 +7,15 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="translations" var="msg"/>
 
-<body>
-<%@include file="languages.jspx"%>
 <c:forEach var="user" items="user"/>
 <div class="form">
-    <h1><fmt:message key="log.in.in.system" bundle="${msg}"/></h1><br>
+    <h1><fmt:message key="log.in.in.system" bundle="${msg}"/></h1>
 
     <form method="post" action="${pageContext.request.contextPath}/login">
-        <input type="text" name="login" value="${user.login}"><br>
-        <input type="password" name="password" value="${user.password}"><br>
+        <input type="text" name="login" value="${user.login}"/>
+        <input type="password" name="password" value="${user.password}"/>
         <button type="submit" value="Submit">Submit</button>
 
     </form>
 </div>
-</body>
 </jsp:root>

@@ -2,7 +2,6 @@ package com.github.servlet;
 
 import com.github.CategoryService;
 import com.github.ItemService;
-import com.github.model.Category;
 import com.github.model.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,22 +15,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
-@RequestMapping("/items")
+@RequestMapping("")
 public class ItemController {
     private static final Logger log = LoggerFactory.getLogger(
             ItemController.class);
+
     private CategoryService categoryService;
 
     private ItemService itemService;
 
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, CategoryService categoryService) {
         this.itemService = itemService;
-    }
-
-    public ItemController(CategoryService categoryService) {
         this.categoryService = categoryService;
-    }
 
+    }
 
     //admin
 
@@ -53,9 +50,9 @@ public class ItemController {
             rq.getSession().setAttribute("description", description);
             rq.getSession().setAttribute("quantity", quantity);
             rq.getSession().setAttribute("price", price);
-            return "redirect:/itemlistadmin";
+            return "itemlistadmin";
         }
-        return "redirect:/itemlistadmin";
+        return "itemlistadmin";
     }
 
 
@@ -65,7 +62,7 @@ public class ItemController {
         Integer id = Integer.parseInt(request.getParameter("id"));
         Item item = itemService.readItem(id);
         request.setAttribute("item", item);
-        return "redirect/items";
+        return "items";
     }
 
     @PostMapping("/readitem")
@@ -73,15 +70,15 @@ public class ItemController {
 
         String item_name = request.getParameter("item_name");
         itemService.readItem(item_name);
-        return "redirect:/itemlistadmin";
+        return "itemlistadmin";
 
     }
 
 
     //update
-    @PostMapping("/itemlistforadmin")
+    @GetMapping("/updateitem")
     public String updateItem(HttpServletRequest request) {
-        Integer id = Integer.valueOf(request.getParameter("updateId"));
+        Integer id = Integer.parseInt(request.getParameter("id"));
         Integer price = Integer.parseInt(request.getParameter("price"));
         itemService.updateItem(price, id);
         log.info("item updated:{} at {}", id, LocalDateTime.now());
@@ -96,13 +93,13 @@ public class ItemController {
         Integer id = Integer.parseInt(request.getParameter("del"));
         request.setAttribute("id", id);
         itemService.deleteItem(id);
-        return "redirect:/itemlistadmin";
+        return "itemlistadmin";
     }
 
 
     //all
     //getAll
-    @GetMapping("/items")
+    @GetMapping("/itemlistadmin")
     public String showAllItems(HttpServletRequest request) {
 
         String pageNumber1 = request.getParameter("pageNumber");
@@ -118,7 +115,7 @@ public class ItemController {
         Long countOfPage = itemService.countOfPage();
         request.setAttribute("pageCount", countOfPage);
 
-        return "redirect:/items";
+        return "itemlistadmin";
     }
 
 

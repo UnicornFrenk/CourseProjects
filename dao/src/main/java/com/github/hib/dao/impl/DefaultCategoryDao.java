@@ -22,7 +22,8 @@ import java.util.stream.Collectors;
 
 public class DefaultCategoryDao implements CategoryDao {
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultItemDao.class);
+    private static final Logger log = LoggerFactory.getLogger(
+            DefaultItemDao.class);
     private final SessionFactory sessionFactory;
 
     public DefaultCategoryDao(SessionFactory sessionFactory) {
@@ -32,60 +33,50 @@ public class DefaultCategoryDao implements CategoryDao {
 
     @Override
     public Category createCategory(Category category) {
-        CategoryEntity cEntity = new CategoryEntity(category.getNameCategory());
-        final Session session = EntityManagerUtil.getEntityManager();
-        session.beginTransaction();
+        CategoryEntity cEntity =
+                CategoryConverter.toEntity(category);
+        final Session session = sessionFactory.getCurrentSession();
         session.save(cEntity);
-        session.getTransaction().commit();
         return CategoryConverter.fromEntity(cEntity);
     }
 
     @Override
     public Category readCategory(String category_name) {
-        CategoryEntity cEntity;
-        try {
-            cEntity = (CategoryEntity) EntityManagerUtil.getEntityManager().createQuery("from CategoryEntity c where c.nameCategory = :name").setParameter("name", category_name).getSingleResult();
-        } catch (NoResultException e) {
-            log.info("category not found by category_name{}", category_name);
-            cEntity = null;
-        }
+        final CategoryEntity cEntity = sessionFactory.getCurrentSession()
+                                                     .get(CategoryEntity.class,
+                                                          category_name);
         return CategoryConverter.fromEntity(cEntity);
     }
 
     @Override
     public void updateCategory(String name, int id) {
-        try {
-            Session session = EntityManagerUtil.getEntityManager().getSession();
-            session.beginTransaction();
-            session.createQuery("update CategoryEntity c set c.nameCategory = :name where c.id = :id")
-                    .setParameter("name", name)
-                    .setParameter("id",id)
-                    .executeUpdate();
-            session.getTransaction().commit();
-        } catch (NoResultException e) {
-            log.info("category not found by id{}", id);
-        }
+        final Session session = sessionFactory.getCurrentSession();
+        session.createQuery(
+                "update CategoryEntity c set c.nameCategory = :name where c.id = :id")
+               .setParameter("name", name)
+               .setParameter("id", id)
+               .executeUpdate();
     }
 
     @Override
     public void deleteCategory(String name) {
-        try {
-           Session session =  EntityManagerUtil.getEntityManager().getSession();
-           session.beginTransaction();
-           session
-                    .createQuery("delete from CategoryEntity c where c.nameCategory = :name")
-                    .setParameter("name", name)
-                    .executeUpdate();
-            session.getTransaction().commit();
-        } catch (NoResultException e) {
-            log.info("category not found by name{}", name);
-        }
+
+        final Session session = sessionFactory.getCurrentSession();
+        session.createQuery(
+                "delete from CategoryEntity c where c.nameCategory = :name")
+               .setParameter("name", name)
+               .executeUpdate();
     }
 
     @Override
     public List<Category> getAll() {
-        final List<CategoryEntity> categoryList = EntityManagerUtil.getEntityManager().createQuery("from CategoryEntity ").list();
-        return categoryList.stream().map(CategoryConverter::fromEntity).collect(Collectors.toList());
+        final List<CategoryEntity> categoryList = sessionFactory.getCurrentSession()
+                                                                .createQuery(
+                                                                        "from CategoryEntity ")
+                                                                .list();
+        return categoryList.stream()
+                           .map(CategoryConverter::fromEntity)
+                           .collect(Collectors.toList());
     }
 }
 

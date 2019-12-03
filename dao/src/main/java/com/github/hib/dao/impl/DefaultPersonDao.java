@@ -12,16 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.NoResultException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DefaultPersonDao implements PersonDao {
-    private static final Logger log = LoggerFactory.getLogger(DefaultPersonDao.class);
+    private static final Logger log = LoggerFactory.getLogger(
+            DefaultPersonDao.class);
     private final SessionFactory sessionFactory;
 
     public DefaultPersonDao(SessionFactory sessionFactory) {
@@ -31,28 +28,24 @@ public class DefaultPersonDao implements PersonDao {
     @Override
     @Transactional
     public int createPerson(Person person) {
-        PersonEntity pEntity = new PersonEntity(person.getId(), person.getLogin(),person.getPassword(), person.getRole(),null);
-        final Session session = EntityManagerUtil.getEntityManager();
-        session.beginTransaction();
-        session.save(pEntity);
-        session.getTransaction().commit();
-        return pEntity.getId();
+        PersonEntity personEntity = PersonConverter.toEntity(
+                new Person(person.getId(), person.getLogin(),
+                           person.getPassword(), person.getRole()));
+        final Session session = sessionFactory.getCurrentSession();
+        session.save(personEntity);
+        return personEntity.getId();
     }
 
     @Override
     @Transactional
     public Person getByLogin(String login) {
 
-        PersonEntity personEntity;
-        try {
-            personEntity = (PersonEntity) EntityManagerUtil.getEntityManager()
-                    .createQuery("from PersonEntity p where p.login = :login")
-                    .setParameter("login", login)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            log.info("user not found by login{}", login);
-            personEntity = null;
-        }
+        Session currentSession = sessionFactory.getCurrentSession();
+        PersonEntity personEntity = (PersonEntity) currentSession
+                                                                 .createQuery(
+                                                          "from PersonEntity p where p.login=:login")
+                                                                 .setParameter("login", login)
+                                                                 .uniqueResult();
         return PersonConverter.fromEntity(personEntity);
     }
 
@@ -61,7 +54,12 @@ public class DefaultPersonDao implements PersonDao {
     public Person getByRole(Role role) {
         PersonEntity personEntity;
         try {
-            personEntity = (PersonEntity) EntityManagerUtil.getEntityManager().createQuery("from PersonEntity p where p.role = :role").setParameter("role", role).getSingleResult();
+            personEntity = (PersonEntity) EntityManagerUtil.getEntityManager()
+                                                           .createQuery(
+                                                                   "from PersonEntity p where p.role = :role")
+                                                           .setParameter("role",
+                                                                         role)
+                                                           .getSingleResult();
         } catch (NoResultException e) {
             log.info("user not found by login{}", role);
             personEntity = null;
@@ -73,59 +71,40 @@ public class DefaultPersonDao implements PersonDao {
     @Transactional
     public void updatePerson(String login, String pass) {
         pass = "www";
-        try {
-            Session session = EntityManagerUtil.getEntityManager().getSession();
-            session.beginTransaction();
-            session.createQuery("update PersonEntity p set p.password = :pass where p.login = :login")
-                    .setParameter("login", login)
-                    .setParameter("pass",pass)
-                    .executeUpdate();
-            session.getTransaction().commit();
-        } catch (NoResultException e) {
-            log.info("user not found by login{}", login);
-        }
+        final Session session = sessionFactory.getCurrentSession();
+        session.createQuery(
+                "update PersonEntity p set p.password = :pass where p.login = :login")
+               .setParameter("login", login)
+               .setParameter("pass", pass)
+               .executeUpdate();
     }
 
     @Override
-   @Transactional
+    @Transactional
     public void deletePerson(Integer id) {
 
-        try {
-            Session session =EntityManagerUtil.getEntityManager().getSession();
-            session.beginTransaction();
-            session.createQuery("delete from PersonEntity p where p.id = :id")
-                    .setParameter("id", id)
-                    .executeUpdate();
-            session.getTransaction().commit();
-        } catch (NoResultException e) {
-            log.info("user not found by id{}", id);
-        }
-
+        final Session session = sessionFactory.getCurrentSession();
+        session.createQuery("delete from PersonEntity p where p.id = :id")
+               .setParameter("id", id)
+               .executeUpdate();
     }
 
     @Override
     public List<Person> getAll() {
-        final List<PersonEntity> personList = EntityManagerUtil
-                .getEntityManager()
-                .createQuery("from PersonEntity ")
-                .list();
-        return personList
-                .stream()
-                .map(PersonConverter::fromEntity)
-                .collect(Collectors.toList());
+        final List<PersonEntity> personList = sessionFactory.getCurrentSession()
+                                                            .createQuery(
+                                                                    "from PersonEntity ")
+                                                            .list();
+        return personList.stream()
+                         .map(PersonConverter::fromEntity)
+                         .collect(Collectors.toList());
     }
 
     public List<Person> getPersons() {
-        List<Person> personList = new ArrayList<>();
-        CriteriaBuilder cb = EntityManagerUtil.getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Person> criteria = cb.createQuery(Person.class);
-        Root<Person> personRoot = criteria.from(Person.class);
-        criteria.select(personRoot);
-        List<Person> personsFromDB = EntityManagerUtil.getEntityManager().createQuery(criteria).getResultList();
-        if (personsFromDB.size() > 0) {
-            personsFromDB.forEach(room -> personList.add(new Person()));
-            return personList;
-        }
-        return null;
+        final List<Person> personList = sessionFactory.getCurrentSession()
+                                                      .createQuery(
+                                                              "from " + "PersonEntity ")
+                                                      .list();
+        return personList;
     }
 }
