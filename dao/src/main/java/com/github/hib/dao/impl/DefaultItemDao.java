@@ -1,6 +1,7 @@
 package com.github.hib.dao.impl;
 
 import com.github.hib.dao.ItemDao;
+import com.github.hib.dao.converters.CategoryConverter;
 import com.github.hib.dao.converters.ItemConverter;
 import com.github.hib.entity.CategoryEntity;
 import com.github.hib.entity.ItemEntity;
@@ -26,7 +27,7 @@ public class DefaultItemDao implements ItemDao {
     private final SessionFactory sessionFactory;
 
     public DefaultItemDao(SessionFactory sessionFactory) {
-        this.sessionFactory=sessionFactory;
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
@@ -37,6 +38,8 @@ public class DefaultItemDao implements ItemDao {
         itemEntity.setDescription(item1.getItemDescription());
         itemEntity.setQuantity(item1.getItemQuantity());
         itemEntity.setPrice(item1.getPriceForOne());
+        //itemEntity.setCategory(CategoryConverter.toEntity(item1
+        // .getItemCategory()));
 
 
         final Session session = sessionFactory.getCurrentSession();
@@ -50,20 +53,23 @@ public class DefaultItemDao implements ItemDao {
 
     @Override
     public Item readItem(String item_name) {
-        final ItemEntity iEntity =
-                sessionFactory.getCurrentSession().get(ItemEntity.class, item_name);
+        final ItemEntity iEntity = (ItemEntity) sessionFactory.getCurrentSession()
+                      .createQuery(
+                              "from  ItemEntity i where i" + ".name=:item_name")
+                      .setParameter("item_name", item_name)
+                      .getSingleResult();
         return ItemConverter.fromEntity(iEntity);
     }
 
     @Override
     public Item readItem(Integer id) {
-        final ItemEntity itemEntity =
-        sessionFactory.getCurrentSession().get(ItemEntity.class, id);
+        final ItemEntity itemEntity = sessionFactory.getCurrentSession()
+                                                    .get(ItemEntity.class, id);
         return ItemConverter.fromEntity(itemEntity);
     }
 
     @Override
-    public void updateItem(Integer price, String name) {
+    public void updateItemByName(Integer price, String name) {
         final Session session = sessionFactory.getCurrentSession();
         session.createQuery(
                 "update ItemEntity set price= :price where name =:name")
@@ -74,10 +80,9 @@ public class DefaultItemDao implements ItemDao {
 
 
     @Override
-    public void updateItem(Integer price, Integer id) {
+    public void updateItemById(Integer price, Integer id) {
         final Session session = sessionFactory.getCurrentSession();
-        session.createQuery(
-                "update ItemEntity set price= :price where id =:id")
+        session.createQuery("update ItemEntity set price= :price where id =:id")
                .setParameter("price", price)
                .setParameter("id", id)
                .executeUpdate();
@@ -88,8 +93,7 @@ public class DefaultItemDao implements ItemDao {
     public void deleteItem(Integer id) {
 
         final Session session = sessionFactory.getCurrentSession();
-        session.createQuery(
-                "delete from ItemEntity i where i.id = :id")
+        session.createQuery("delete from ItemEntity i where i.id = :id")
                .setParameter("id", id)
                .executeUpdate();
     }
@@ -97,9 +101,9 @@ public class DefaultItemDao implements ItemDao {
     @Override
     public List<Item> getAll() {
         final List<ItemEntity> itemEntities = sessionFactory.getCurrentSession()
-                                                               .createQuery(
-                                                                       "from ItemEntity ")
-                                                               .list();
+                                                            .createQuery(
+                                                                    "from ItemEntity ")
+                                                            .list();
         return itemEntities.stream()
                            .map(ItemConverter::fromEntity)
                            .collect(Collectors.toList());
@@ -120,7 +124,7 @@ public class DefaultItemDao implements ItemDao {
     @Override
     public long getCountOfItems() {
         CriteriaBuilder cb = sessionFactory.getCurrentSession()
-                                              .getCriteriaBuilder();
+                                           .getCriteriaBuilder();
         CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
         Root<ItemEntity> list = criteria.from(ItemEntity.class);
         if (list != null) {
@@ -128,8 +132,8 @@ public class DefaultItemDao implements ItemDao {
         }
         try {
             return sessionFactory.getCurrentSession()
-                                    .createQuery(criteria)
-                                    .getSingleResult();
+                                 .createQuery(criteria)
+                                 .getSingleResult();
         } catch (NoResultException e) {
             return 0L;
         }

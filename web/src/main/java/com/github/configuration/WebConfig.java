@@ -43,6 +43,10 @@ public class WebConfig {
     public LoginController loginController() {
         return new LoginController(serviceConfig.personService());
     }
+    @Bean
+    public BookingController bookingController() {
+        return new BookingController(serviceConfig.orderService());
+    }
 
     @Bean
     public UrlBasedViewResolver tilesViewResolver() {

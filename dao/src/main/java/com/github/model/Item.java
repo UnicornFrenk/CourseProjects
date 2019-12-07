@@ -10,7 +10,7 @@ public class Item {
     private String itemName;
     private String itemDescription;
     private Integer itemQuantity;
-    private String itemCategory;
+    private Category itemCategory;
     private Integer priceForOne;
     public Item(){}
 
@@ -22,7 +22,8 @@ public class Item {
         this.priceForOne = priceForOne;
     }
 
-    public Item(Integer id, String itemName, String itemDescription, Integer itemQuantity, String itemCategory, Integer priceForOne) {
+    public Item(Integer id, String itemName, String itemDescription,
+                Integer itemQuantity, Category itemCategory, Integer priceForOne) {
         this.id = id;
         this.itemName = itemName;
         this.itemDescription = itemDescription;

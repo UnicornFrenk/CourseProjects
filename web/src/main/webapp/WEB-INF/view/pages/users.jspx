@@ -2,24 +2,58 @@
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:sec="http://www.springframework.org/security/tags"
-          version="2.0">
-    <h1>Users!</h1>
+          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+    <style>
+        button.new {
+            background: -moz-linear-gradient(#F5F5F5, #808080);
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#F5F5F5), to(#808080));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#808080');
+            padding: 3px 7px;
+            color: #333;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            border: 1px solid #666;
+            width: 70px;
+        }
+
+        body.body {
+            background: darkgrey;
+            height: 100px;
+            border-radius: 10px;
+        }
+    </style>
+    <body class="body">
+    <fmt:setLocale value="${locale}"/>
+    <fmt:setBundle basename="translations" var="msg"/>
+    <h1><a href="https://online-letters.ru/" target="_blank"><img
+            src="https://x-lines.ru/letters/i/cyrillicfancy/0458/000000/26/0/ki3skhuurbsg1h5wrbug6htycf1g44mq.png"
+            border="0"/></a></h1>
     <table border="3">
         <c:forEach items="${users}" var="user">
             <tr>
                 <td>${user.id}</td>
-                <td>${user.login}</td>
-                <td>${user.password}</td>
-                <td>${user.role}</td>
-                <td>
+                <td width="150" align="center">${user.login}</td>
+                <td width="150" align="center">${user.password}</td>
+                <td width="150" align="center">${user.role}</td>
+                <td width="150" align="center">
                     <form method="post"
-                          action="${pageContext.request.contextPath}/deleteUser">
-                        <button type="submit" name="deleteUser"
+                          action="${pageContext.request.contextPath}/deleteuser">
+                        <button class="new" type="submit" name="deleteUser"
                                 value="${user.id}">Delete User
+                        </button>
+                    </form>
+                </td>
+                <td width="150" align="center">
+                    <form method="post"
+                          action="${pageContext.request.contextPath}/updateuser">
+                        <button class="new" type="submit" name="updateuser"
+                                value="${user.id}">Update User
                         </button>
                     </form>
                 </td>
             </tr>
         </c:forEach>
     </table>
+    </body>
 </jsp:root>

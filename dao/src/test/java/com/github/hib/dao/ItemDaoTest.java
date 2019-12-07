@@ -56,7 +56,7 @@ public class ItemDaoTest {
 
         Item item = itemDao.readItem(id);
 
-        String itemCategory = item.getItemCategory();
+        Category itemCategory = item.getItemCategory();
         Assertions.assertNotNull(testItem);
         Assertions.assertNotNull(itemCategory);
     }
@@ -73,23 +73,23 @@ public class ItemDaoTest {
     public void updateItem() {
         ItemEntity testItem = saveItem();
 
-       itemDao.updateItem(200, testItem.getId());
+       itemDao.updateItemById(200, testItem.getId());
 
         Item item = itemDao.readItem(testItem.getId());
         Assertions.assertEquals((Integer) 200, item.getPriceForOne());
     }
 
-    @Test
-    public void deleteSession() {
-        final ItemEntity item = saveItem();
-        System.out.println(item);
+//    @Test
+//    public void updateItemByName() {
+//        ItemEntity testItem = saveItem();
+//
+//        itemDao.updateItemByName(20, testItem.getName());
+//
+//        Item item = itemDao.readItem(testItem.getName());
+//        Assertions.assertEquals((Integer) 20, item.getPriceForOne());
+//    }
 
-        itemDao.deleteItem(item.getId());
 
-        ItemEntity itemEntity = EntityManagerUtil.getEntityManager().find(ItemEntity.class, item.getId());
-        System.out.println(itemEntity);
-        Assertions.assertNull(itemEntity);
-    }
 
     @Test
     public void allItem() {

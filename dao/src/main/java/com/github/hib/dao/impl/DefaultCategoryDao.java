@@ -42,9 +42,12 @@ public class DefaultCategoryDao implements CategoryDao {
 
     @Override
     public Category readCategory(String category_name) {
-        final CategoryEntity cEntity = sessionFactory.getCurrentSession()
-                                                     .get(CategoryEntity.class,
-                                                          category_name);
+        final CategoryEntity cEntity = (CategoryEntity) sessionFactory
+                .getCurrentSession()
+                .createQuery(
+                        "from CategoryEntity c where c.nameCategory=:category_name")
+                .setParameter("category_name",category_name)
+                .getSingleResult();
         return CategoryConverter.fromEntity(cEntity);
     }
 

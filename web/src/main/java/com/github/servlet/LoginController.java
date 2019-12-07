@@ -29,7 +29,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(HttpSession session) {
-        Object authUser = session.getAttribute("authUser");
+        Object authUser = session.getAttribute("user");
         if (authUser == null) {
             return "login";
         }
@@ -43,12 +43,10 @@ public class LoginController {
         String password = request.getParameter("password");
         Person user = new Person(login, password);
         personService.getByLogin(user.getLogin());
-
-
         request.getSession().setAttribute("user", user);
 
         if (request.getSession().getAttribute("user") != null) {
-            return "authUser";
+            return "redirect:/authUser";
 
         } else {
 

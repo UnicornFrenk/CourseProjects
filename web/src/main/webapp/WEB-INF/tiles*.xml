@@ -5,21 +5,23 @@
 <tiles-definitions>
     <definition name="default" template="/WEB-INF/view/layouts/default.jspx">
 
-        <put-attribute name="title" value="Shop homepage" />
+        <put-attribute name="title" value="Shop homepage"/>
         <put-attribute name="header"
                        value="/WEB-INF/view/common_view/header.jspx"/>
-        <put-attribute name="menu" value="menu.jspx" />
         <put-attribute name="body" value=""/>
-        <put-attribute name="footer" value="/WEB-INF/view/common_view/footer.jspx"/>
+        <put-attribute name="footer"
+                       value="/WEB-INF/view/common_view/footer.jspx"/>
     </definition>
 
-
     <definition name="login" extends="default">
+        <put-attribute name="header"
+                       value="/WEB-INF/view/common_view/mainheader.jspx"/>
         <put-attribute name="body" value="/WEB-INF/view/pages/login.jspx"/>
     </definition>
 
     <definition name="registration" extends="default">
-        <put-attribute name="body" value="/WEB-INF/view/pages/registration.jspx"/>
+        <put-attribute name="body"
+                       value="/WEB-INF/view/pages/registration.jspx"/>
     </definition>
 
 
@@ -43,12 +45,13 @@
         <put-attribute name="body" value="/WEB-INF/view/pages/createitem.jspx"/>
     </definition>
 
-    <definition name="itemList" extends="default">
-        <put-attribute name="body" value="/WEB-INF/view/pages/itemList.jspx"/>
+    <definition name="itemlist" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/pages/itemlist.jspx"/>
     </definition>
 
     <definition name="itemlistadmin" extends="default">
-        <put-attribute name="body" value="/WEB-INF/view/pages/itemlistadmin.jspx"/>
+        <put-attribute name="body"
+                       value="/WEB-INF/view/pages/itemlistadmin.jspx"/>
     </definition>
 
     <definition name="updateitem" extends="default">
@@ -58,10 +61,11 @@
     <!--orders-->
 
     <definition name="createorder" extends="default">
-        <put-attribute name="body" value="/WEB-INF/view/pages/createorder.jspx"/>
+        <put-attribute name="body"
+                       value="/WEB-INF/view/pages/createorder.jspx"/>
     </definition>
 
     <definition name="orders" extends="default">
-        <put-attribute name="body" value="/WEB-INF/view/pages/orders.jspx"/>
+        <put-attribute name="body" value="/WEB-INF/view/pages/createorder.jspx"/>
     </definition>
 </tiles-definitions>

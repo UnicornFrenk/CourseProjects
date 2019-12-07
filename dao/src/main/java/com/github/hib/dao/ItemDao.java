@@ -11,9 +11,9 @@ public interface ItemDao {
 
     Item readItem(Integer id);
 
-    void updateItem(Integer price, String name);
+    void updateItemByName(Integer price, String name);
 
-    void updateItem(Integer price, Integer id);
+    void updateItemById(Integer price, Integer id);
 
     void deleteItem(Integer id);
 

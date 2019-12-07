@@ -12,8 +12,8 @@ public interface ItemService {
     Item readItem(Integer id);
 
 
-    void updateItem(Integer price, String name);
-    void updateItem(Integer price, Integer id);
+    void updateItemByName(Integer price, String name);
+    void updateItemById(Integer price, Integer id);
     void deleteItem(Integer id);
     List<Item> getAll();
     List<Item> getPage(int page);

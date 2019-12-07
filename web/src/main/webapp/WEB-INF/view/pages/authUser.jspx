@@ -2,25 +2,55 @@
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:sec="http://www.springframework.org/security/tags"
-          version="2.0">
+          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+    <style>
+        button.new {
+            background: -moz-linear-gradient(#F5F5F5, #808080);
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#F5F5F5), to(#808080));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#808080');
+            padding: 3px 7px;
+            color: #333;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            border: 1px solid #666;
+        }
 
-    <h3 align="center">Hi, ${user.login} ! We glad to see you!</h3>
+        body.body {
+            background: darkgrey;
+            border-radius: 10px;
+            border: 1px solid #666;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <body class="body">
+    <fmt:setLocale value="${locale}"/>
+    <fmt:setBundle basename="translations" var="msg"/>
+
+    <h3 align="center"><fmt:message key="hi" bundle="${msg}"/> ${user.login} !
+        <fmt:message key="we.glad.to.see.you" bundle="${msg}"/></h3>
 
 
     <c:choose>
         <c:when test="${user.login == 'ADMIN'}">
-            <a href="${pageContext.request.contextPath}/itemlistadmin">items
+            <a
+                    href="${pageContext.request.contextPath}/itemlistadmin"><fmt:message key="items" bundle="${msg}"/>
             </a><br/>
-            <a href="${pageContext.request.contextPath}/users">users</a><br/>
-            <a href="${pageContext.request.contextPath}/logout">logout</a>
+            <a href="${pageContext.request.contextPath}/users"><fmt:message
+                    key="users" bundle="${msg}"/></a><br/>
+            <a href="${pageContext.request.contextPath}/logout"><fmt:message
+                    key="logout" bundle="${msg}"/></a>
 
             <br/>
         </c:when>
         <c:otherwise>
-            <a href="${pageContext.request.contextPath}/itemlist">items</a><br/>
-            <a href="${pageContext.request.contextPath}/logout">logout</a>
+            <a
+                    href="${pageContext.request.contextPath}/itemlist"><fmt:message key="items" bundle="${msg}"/></a><br/>
+            <a href="${pageContext.request.contextPath}/logout">
+                <fmt:message key="logout" bundle="${msg}"/></a>
         </c:otherwise>
     </c:choose>
-
+    </body>
 
 </jsp:root>

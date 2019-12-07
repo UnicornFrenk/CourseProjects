@@ -2,30 +2,44 @@
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:sec="http://www.springframework.org/security/tags"
-          version="2.0">
-<body>
-<h1>Hi, new User!</h1>
+          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+    <style>
+        body.body {
+            background: darkgrey;
+            height: 100px;
+            border-radius: 10px;
+        }
+    </style>
+    <body class="body">
+    <fmt:setLocale value="${locale}"/>
+    <fmt:setBundle basename="translations" var="msg"/>
+    <h1>Hi, new User!</h1>
 
-<c:forEach var="user" items="users"/>
-<form method="post" action="${pageContext.request.contextPath}/registration">
-<table>
-    <tr><td>Введите имя пользователя:</td>
-        <td><input type="text"  name="login" value="${users.login}"><br></td>
-    </tr>
-    <tr><td>Введите пароль:</td>
-        <td><input type="password" name="password" value="${users.password}"><br></td>
-    </tr>
+    <c:forEach var="user" items="users"/>
+    <form method="post"
+          action="${pageContext.request.contextPath}/registration">
+        <table>
+            <tr>
+                <td>Введите имя пользователя:</td>
+                <td><input type="text" name="login" value="${users.login}"><br>
+                </td>
+            </tr>
+            <tr>
+                <td>Введите пароль:</td>
+                <td><input type="password" name="password"
+                           value="${users.password}"><br></td>
+            </tr>
 
-    <tr>
-        <td> Hi, new User!</td>
-        <td>
+            <tr>
+                <td> Hi, new User!</td>
+                <td>
 
-            <input type="submit" value="Submit"></input>
-        </td>
-    </tr>
+                    <input type="submit" value="Submit"></input>
+                </td>
+            </tr>
 
 
-</table>
-</form>
-</body>
+        </table>
+    </form>
+    </body>
 </jsp:root>

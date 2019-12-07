@@ -20,16 +20,16 @@ public class UnicodeFilter implements Filter {
 
         String locale = req.getParameter("locale");
 
-        if (locale==null){
+        if (locale == null) {
             locale = (String) req.getSession().getAttribute("locale");
-            if (locale==null) {
+            if (locale == null) {
                 req.getSession().setAttribute("locale", "ru_RU");
             }
-        }else {
+        } else {
             req.getSession().setAttribute("locale", locale);
         }
 
 
-        filterChain.doFilter(req,resp);
+        filterChain.doFilter(req, resp);
     }
 }

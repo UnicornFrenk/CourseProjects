@@ -2,14 +2,13 @@ package com.github.hib.entity;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -34,7 +33,24 @@ public class CategoryEntity {
         return items;
     }
 
-    public void setEmployees(List<ItemEntity> items) {
+    public void setItems(List<ItemEntity> items) {
         this.items = items;
+    }
+
+
+    public Integer getIdCategory() {
+        return idCategory;
+    }
+
+    public void setIdCategory(Integer idCategory) {
+        this.idCategory = idCategory;
+    }
+
+    public String getNameCategory() {
+        return nameCategory;
+    }
+
+    public void setNameCategory(String nameCategory) {
+        this.nameCategory = nameCategory;
     }
 }

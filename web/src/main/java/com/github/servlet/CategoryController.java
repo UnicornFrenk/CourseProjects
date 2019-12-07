@@ -37,7 +37,7 @@ public class CategoryController {
         String name = request.getParameter("name");
 
         categoryService.readCategory(name);
-        return "/items";
+        return "items";
     }
 
 
@@ -49,7 +49,7 @@ public class CategoryController {
         request.setAttribute("id", id);
 
         categoryService.updateCategory(name, id);
-        return "/items";
+        return "items";
     }
 
     //delete
@@ -58,7 +58,7 @@ public class CategoryController {
         String name = request.getParameter("name");
         categoryService.deleteCategory(name);
 
-        return "/items";
+        return "items";
     }
 
 
@@ -66,7 +66,7 @@ public class CategoryController {
     @GetMapping("/allcategories")
     public String getAll(HttpServletRequest request) {
         List<Category> all = categoryService.getAll();
-        return "/categories";
+        return "categories";
     }
 
 

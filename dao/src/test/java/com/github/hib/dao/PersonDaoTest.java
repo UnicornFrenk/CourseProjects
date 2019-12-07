@@ -73,13 +73,6 @@ public class PersonDaoTest {
         Assertions.assertEquals(personFromDb.getPassword(), "www");
     }
 
-    @Test
-    public void deleteSession() {
-        final PersonEntity person = savePerson();
-        personDao.deletePerson(person.getId());
-        PersonEntity personEntity =EntityManagerUtil.getEntityManager().find(PersonEntity.class, person.getId());
-        Assertions.assertNull(personEntity);
-    }
 
     @Test
     public void getAll() {

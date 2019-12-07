@@ -3,11 +3,45 @@
           xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:sec="http://www.springframework.org/security/tags"
           version="2.0">
+    <style type="text/css">
+        button.new {
+            background: -moz-linear-gradient(#F5F5F5, #808080);
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#F5F5F5), to(#808080));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#808080');
+            padding: 3px 7px;
+            color: #333;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            border: 1px solid #666;
+        }
 
+        header.header {
+            background: dimgray;
+            height: 80px;
+            border-radius: 10px;
+        }</style>
+    <header class="header">
+        <form method="get">
+            <button class="new" type="submit" name="locale" value="en_US"><img
+                    src="data:image/jpeg;base64,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"
+                    width="10" height="10"/></button>
+            <button class="new" type="submit" name="locale" value="en_US">
+                English
+            </button>
+            <button class="new" type="submit" name="locale" value="ru_RU">
+                Русский
+            </button>
+            <button class="new" type="submit" name="locale" value="zh_CN">中国
+            </button>
 
-    <header class="clearfix">
-        <h2>Header</h2>
+            <button class="new">
+                <a href="${pageContext.request.contextPath}/logout">logout</a>
+            </button>
+        </form>
+        <h1 align="center"><a href="https://online-letters.ru/" target="_blank"><img
+                src="https://x-lines.ru/letters/i/cyrillicfancy/0593/e1e1e1/32/0/k71saa5xpi1o.png"
+                border="0"/></a></h1>
     </header>
-
 </jsp:root>
 

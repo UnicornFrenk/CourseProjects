@@ -1,6 +1,7 @@
 package com.github.impl;
 
 import com.github.hib.dao.ItemDao;
+import com.github.model.Category;
 import com.github.model.Item;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +33,7 @@ public class DefaultItemServiceTest {
 
     @Test
     public void createItemTest() {
-        Item item = new Item(3,"nuts", "nuts", 1000, 500);
+        Item item = new Item(3, "nuts", "nuts", 1000, 500);
         when(dao.createItem(item, 1)).thenReturn(item);
 
         Item itemFromDb = service.createItem(item, 1);
@@ -54,11 +55,21 @@ public class DefaultItemServiceTest {
     @Test
     public void updateItemTest() {
 
-        doNothing().when(dao).updateItem(anyInt(), anyString());
+        doNothing().when(dao).updateItemByName(anyInt(), anyString());
 
-        service.updateItem(1, "apple");
+        service.updateItemByName(1, "apple");
 
-        verify(dao).updateItem(1, "apple");
+        verify(dao).updateItemByName(1, "apple");
+    }
+
+    @Test
+    public void updateItemId() {
+
+        doNothing().when(dao).updateItemById(anyInt(), anyInt());
+
+        service.updateItemById(300, 7);
+
+        verify(dao).updateItemById(300, 7);
     }
 
     @Test

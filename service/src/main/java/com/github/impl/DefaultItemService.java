@@ -40,15 +40,15 @@ public class DefaultItemService implements ItemService {
 
     @Override
     @Transactional
-    public void updateItem(Integer price, String name) {
-        itemDao.updateItem(price, name);
+    public void updateItemByName(Integer price, String name) {
+        itemDao.updateItemByName(price, name);
     }
 
 
     @Override
     @Transactional
-    public void updateItem(Integer price, Integer id) {
-        itemDao.updateItem(price, id);
+    public void updateItemById(Integer price, Integer id) {
+        itemDao.updateItemById(price, id);
     }
 
     @Override

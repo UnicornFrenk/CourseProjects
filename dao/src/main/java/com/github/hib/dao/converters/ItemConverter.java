@@ -28,11 +28,13 @@ public class ItemConverter {
         String category = null;
         if (category2 != null) {
 
-            category = CategoryConverter.fromEntity(category2).getNameCategory();
+            category = CategoryConverter.fromEntity(category2)
+                                        .getNameCategory();
         }
         return new Item(itemEntity.getId(), itemEntity.getName(),
                         itemEntity.getDescription(), itemEntity.getQuantity(),
-                        category, itemEntity.getPrice());
+                        CategoryConverter.fromEntity(itemEntity.getCategory()),
+                        itemEntity.getPrice());
 
     }
 }

@@ -41,7 +41,7 @@ public class DefaultPersonDaoTest {
 
     @Test
     public void getByLogin() {
-        Person person = new Person("Sofia1","Sofia1", Role.USER);
+        Person person = new Person("Sofia","Sofia", Role.USER);
         personDao.createPerson(person);
         Person test =  personDao.getByLogin("Sofia");
         String password = test.getPassword();

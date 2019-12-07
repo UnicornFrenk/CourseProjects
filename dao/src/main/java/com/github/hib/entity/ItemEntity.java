@@ -47,6 +47,15 @@ public class ItemEntity {
 
     }
 
+    public ItemEntity(String name, String description, Integer quantity,
+                      CategoryEntity category, Integer price) {
+        this.name = name;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+        this.category = category;
+    }
+
     @ManyToOne
     @JoinColumn(name = "category_Id")
     private CategoryEntity category;
@@ -58,7 +67,6 @@ public class ItemEntity {
     public void setCategory(CategoryEntity category) {
         this.category = category;
     }
-
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "booking_item", joinColumns = {@JoinColumn(name = "item_id")},

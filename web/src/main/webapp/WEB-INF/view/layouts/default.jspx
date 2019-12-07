@@ -7,10 +7,10 @@
 <jsp:output doctype-public="-//W3C//DTD XHTML 1.1//EN"
             doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
             doctype-root-element="html" omit-xml-declaration="false"/>
-
 <jsp:directive.page pageEncoding="UTF-8" contentType="text/html; UTF-8"/>
+
 <head>
-    <title>Nightmare</title>
+    <title>Nighmare</title>
 </head>
 <body>
 <tiles:insertAttribute name="header"/>

@@ -31,49 +31,41 @@ public class UserController {
 
     //create
     @GetMapping("/authUser")
-    public String createUser(HttpServletRequest request){
+    public String getByLogin(HttpServletRequest request){
 
         String login = request.getParameter("login");
         request.setAttribute("login", login);
         String password = request.getParameter("password");
         request.setAttribute("password", password);
 
-        personService.createPerson(new Person(login, password));
-        return "/authUser";
+        personService.getByLogin(login);
+        return "authUser";
     }
 
-    @PostMapping("/users")
-    public String createNewUser(HttpServletRequest request) {
-
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        personService.createPerson(new Person(login,password));
-        log.info("user created:{} at {}", login, LocalDateTime.now());
-        return "redirect:/users";
-    }
 
     //read
     @PostMapping("/authUser")
     public String read(HttpServletRequest request) {
         String login = request.getParameter("login");
         request.setAttribute("login", login);
-        return "/authUser";
+        personService.getByLogin(login);
+        return "authUser";
     }
 
 
     //update
     @PostMapping("/updatePassword")
     public String updateUserPassword(HttpServletRequest request){
-        return "/users";
+        return "users";
     }
 
     //delete
-    @PostMapping
+    @PostMapping ("/deleteuser")
     public String deleteUser(HttpServletRequest request ) {
 
         Integer id = Integer.parseInt(request.getParameter("deleteUser"));
         personService.deletePerson(id);
-        return "redirect: /users";
+        return "redirect:/users";
     }
 
 
