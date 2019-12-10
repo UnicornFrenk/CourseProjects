@@ -1,0 +1,70 @@
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:sec="http://www.springframework.org/security/tags"
+          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+    <style>
+        button.new {
+            background: -moz-linear-gradient(#F5F5F5, #808080);
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#F5F5F5), to(#808080));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#808080');
+            padding: 3px 7px;
+            color: #333;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            border: 1px solid #666;
+        }
+
+        body.body {
+            background: darkgrey;
+            height: 100px;
+            border-radius: 10px;
+        }
+    </style>
+    <body class="body">
+    <fmt:setLocale value="${locale}"/>
+    <fmt:setBundle basename="translations" var="msg"/>
+    <h3>Items list</h3>
+
+    <table border="2">
+        <tr>
+            <td width="150">orderId</td>
+            <td width="150">userName</td>
+            <td width="150">totalSum</td>
+            <td width="150">delAddress</td>
+            <td width="150">Update</td>
+            <td width="150">Delete</td>
+
+        </tr>
+        <c:forEach items="${items}" var="item">
+            <tr>
+                <td>${booking.orderId}</td>
+                <td>${booking.userName}</td>
+                <td>${booking.totalSum}</td>
+                <td>${booking.delAddress}</td>
+
+                <td>
+                    <a
+                            href="${pageContext.request.contextPath}/updateOrder?orderId=${booking.orderId}">update</a>
+                </td>
+                <td>
+                    <form method="post"
+                          action="${pageContext.request.contextPath}/deleteOrder">
+                        <input type="submit" value="Delete"/>
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+
+    <c:forEach begin="1" end="${pageCount}" var="pageNumber">
+        <button class="new"><a
+                href="${pageContext.request.contextPath}/orderlistadmin?pageNumber=${pageNumber}">${pageNumber}</a>
+        </button>
+    </c:forEach>
+    <br/>
+    <br/>
+
+    </body>
+</jsp:root>

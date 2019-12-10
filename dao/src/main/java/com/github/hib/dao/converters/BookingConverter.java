@@ -9,10 +9,10 @@ public class BookingConverter {
             return null;
         }
         final BookingEntity bookingEntity = new BookingEntity();
-        bookingEntity.setId(order.getId());
-        bookingEntity.setUser_Id(order.getUser_Id());
-        bookingEntity.setItem_id(order.getItem_id());
-        bookingEntity.setTotalPrice(order.getTotalPrice());
+        bookingEntity.setOrderId(order.getOrderId());
+        bookingEntity.setUserName(order.getUserName());
+        bookingEntity.setItemList(order.getItemList());
+        bookingEntity.setPrice(order.getPrice());
         bookingEntity.setDeliveryAddress(order.getDeliveryAddress());
         return bookingEntity;
     }
@@ -21,7 +21,9 @@ public class BookingConverter {
         if (bookingEntity == null) {
             return null;
         }
-        return new Order(bookingEntity.getId(), bookingEntity.getUser_Id(), bookingEntity.getItem_id(), bookingEntity.getTotalPrice(), bookingEntity.getDeliveryAddress());
+        return new Order(bookingEntity.getOrderId(), bookingEntity.getUserName(),
+                         bookingEntity.getItemList(), bookingEntity.getPrice(),
+                         bookingEntity.getDeliveryAddress());
 
     }
 }

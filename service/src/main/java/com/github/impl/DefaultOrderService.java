@@ -34,7 +34,7 @@ public class DefaultOrderService implements OrderService {
     @Override
     @Transactional
     public Order getOrderByPersonLogin(String login) {
-        return orderDao.getOrderByPersonLogin(login);
+        return orderDao.getOrderByUserName(login);
     }
 
     @Override

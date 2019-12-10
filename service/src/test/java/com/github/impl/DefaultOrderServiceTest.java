@@ -46,10 +46,11 @@ public class DefaultOrderServiceTest {
 
     @Test
     public void readOrderTest() {
-        Order order = new Order(1, null, null, null, null);
+
+        Order order = new Order(1, "Sofia", null, null, null);
         when(dao.readOrder(1)).thenReturn(order);
 
-        Integer orderFromDb = dao.readOrder(1).getId();
+        Integer orderFromDb = dao.readOrder(1).getOrderId();
         Integer expName = 1;
 
         assertEquals(expName, orderFromDb);
@@ -74,7 +75,6 @@ public class DefaultOrderServiceTest {
     public void getAllOrdersTest() {
         when(dao.getAll()).thenReturn(new ArrayList<Order>());
         List<Order> orders = service.getAll();
-        System.out.println(orders);
 
         assertNotNull(orders);
     }

@@ -70,7 +70,7 @@ public class ItemEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "booking_item", joinColumns = {@JoinColumn(name = "item_id")},
-            inverseJoinColumns = {@JoinColumn(name = "booking_id")}
+            inverseJoinColumns = {@JoinColumn(name = "id")}
     )
     private List<BookingEntity> orders = new ArrayList<>();
 

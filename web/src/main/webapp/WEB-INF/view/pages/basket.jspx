@@ -1,0 +1,35 @@
+<jsp:root
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsp="http://java.sun.com/JSP/Page"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+        xmlns:sec="http://www.springframework.org/security/tags"
+        version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+    <style xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fmt="http://java.sun.com/jstl/fmt">
+        button.new {
+            background: -moz-linear-gradient(#F5F5F5, #808080);
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#F5F5F5), to(#808080));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#808080');
+            padding: 3px 7px;
+            color: #333;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            border: 1px solid #666;
+        }
+
+        body.body {
+            background: darkgrey;
+            border-radius: 10px;
+            border: 1px solid #666;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <body class="body">
+    <fmt:setLocale value="${locale}"/>
+    <fmt:setBundle basename="translations" var="msg"/>
+
+
+
+    </body>
+</jsp:root>

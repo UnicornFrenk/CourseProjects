@@ -19,27 +19,24 @@ public class BookingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Integer orderId;
     @Column
-    private Integer user_Id;
+    private String userName;
     @Column
-    private Integer item_id;
-    @Column
-    private Integer totalPrice;
-    @Column
+    private Integer price;
+    @Embedded
     private Address deliveryAddress;
 
     @ManyToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<ItemEntity> itemList = new ArrayList<>();
 
-
-    public BookingEntity(Integer user_Id, Integer item_id, Integer totalPrice, Address deliveryAddress) {
-        this.user_Id = user_Id;
-        this.item_id = item_id;
-        this.totalPrice = totalPrice;
+    public BookingEntity(String userName, Integer price, Address deliveryAddress,
+                         List<ItemEntity> itemList) {
+        this.userName = userName;
+        this.price = price;
         this.deliveryAddress = deliveryAddress;
+        this.itemList = itemList;
     }
-
 
     public List<ItemEntity> getItems() {
         return itemList;
@@ -51,6 +48,6 @@ public class BookingEntity {
 
     @Override
     public String toString() {
-        return "BookingEntity{" + "id=" + id + ", user_Id=" + user_Id + ", item_id=" + item_id + ", totalPrice=" + totalPrice + ", deliveryAddress=" + deliveryAddress + '}';
+        return "BookingEntity{" + "orderId=" + orderId + ", userName='" + userName + '\'' + ", totalPrice=" + price + ", deliveryAddress=" + deliveryAddress + ", itemList="  + '}';
     }
 }
