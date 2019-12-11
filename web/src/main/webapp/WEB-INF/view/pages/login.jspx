@@ -35,6 +35,5 @@
 
     </div>
 
-    ${locale}
     </body>
 </jsp:root>

@@ -47,8 +47,8 @@
         <c:otherwise>
             <a
                     href="${pageContext.request.contextPath}/itemlist"><fmt:message key="items" bundle="${msg}"/></a><br/>
-            <a href="${pageContext.request.contextPath}/logout">
-                <fmt:message key="logout" bundle="${msg}"/></a>
+            <a href="${pageContext.request.contextPath}/neworder">
+                <fmt:message key="new.order" bundle="${msg}"/></a>
         </c:otherwise>
     </c:choose>
     </body>

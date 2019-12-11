@@ -29,24 +29,32 @@
         <strong><i> Items list</i></strong></p>
     <br/>
     <form>
-    <table border="2">
-        <tr>
-            <td width="150">id</td>
-            <td width="150">Name</td>
-            <td width="150">Description</td>
-            <td width="150">Total Quantity</td>
-            <td width="150">Price For One</td>
-        </tr>
-        <c:forEach items="${items}" var="item">
+        <table border="2">
             <tr>
-                <td><input type="checkbox"/>${item.id}</td>
-                <td>${item.name}</td>
-                <td>${item.description}</td>
-                <td>${item.quantity}</td>
-                <td>${item.price}</td>
+                <td width="150">id</td>
+                <td width="150">Name</td>
+                <td width="150">Description</td>
+                <td width="150">Total Quantity</td>
+                <td width="150">Price For One</td>
+                <td width="150">Quantity</td>
+                <td width="150">Total price</td>
+
             </tr>
-        </c:forEach>
-    </table>
+            <c:forEach items="${items}" var="item">
+                <tr>
+                    <td><input type="checkbox">${item.id}</input></td>
+                    <td><input type="hidden">${item.name}</input></td>
+                    <td>${item.description}</td>
+                    <td>${item.quantity}</td>
+                    <td><input type="hidden">${item.price}</input></td>
+                    <td><input type="text"/></td>
+                    <td width="150"><output>
+                    </output></td>
+                </tr>
+            </c:forEach>
+        </table>
+        <button class="new"><input type="hidden"><fmt:message key="create.new.order"
+                                                              bundle="${msg}"/></input></button>
     </form>
     <c:forEach begin="1" end="${pageCount}" var="pageNumber">
         <button class="new"><a

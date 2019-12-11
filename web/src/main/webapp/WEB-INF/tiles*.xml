@@ -60,12 +60,12 @@
 
     <!--orders-->
 
-    <definition name="createorder" extends="default">
+    <definition name="neworder" extends="default">
         <put-attribute name="body"
-                       value="/WEB-INF/view/pages/createorder.jspx"/>
+                       value="/WEB-INF/view/pages/neworder.jspx"/>
     </definition>
 
     <definition name="orders" extends="default">
-        <put-attribute name="body" value="/WEB-INF/view/pages/createorder.jspx"/>
+        <put-attribute name="body" value="/WEB-INF/view/pages/neworder.jspx"/>
     </definition>
 </tiles-definitions>

@@ -28,7 +28,19 @@
     <body class="body">
     <fmt:setLocale value="${locale}"/>
     <fmt:setBundle basename="translations" var="msg"/>
+    <table>
+        <tr>
+            <td width="150">id</td>
+        </tr>
+        <c:forEach items="${items}" var="item">
+        <tr>
+            <td>${item.name}</td>
 
+        </tr>
+        <tr>
+            <td>totalprice</td>
+        </tr>
+    </table>
 
 
     </body>

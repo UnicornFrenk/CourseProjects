@@ -1,60 +1,93 @@
 package com.github.servlet;
 
+import com.github.ItemService;
 import com.github.OrderService;
 import com.github.hib.entity.Address;
 import com.github.hib.entity.ItemEntity;
+import com.github.model.Item;
 import com.github.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Controller
+@RequestMapping()
 public class BookingController {
 
 
-    @Autowired
     OrderService orderService;
 
-    public BookingController(OrderService orderService) {
+    ItemService itemService;
+
+    public BookingController(OrderService orderService, ItemService itemService) {
         this.orderService = orderService;
+        this.itemService = itemService;
 
     }
 
     //create
-    @PostMapping("/createorder")
-    public String createOrder(HttpServletRequest request){
-        List <ItemEntity> itemList = new ArrayList<>();
-//        = request.getParameter("itemList");
-        Integer orderId = Integer.valueOf(request.getParameter("orderId"));
-        String userName = request.getParameter("userName");
-        Address address = new Address();
-        Integer sum = Integer.valueOf(request.getParameter("sum"));
 
-        Order order = new Order(orderId,userName,itemList,sum,address);
-        orderService.createOrder(order);
-        return null;
+    @GetMapping("/neworder")
+    public String createNewOrder(HttpServletRequest request) {
+        String pageNumber1 = request.getParameter("pageNumber");
+        if (pageNumber1 == null) {
+            pageNumber1 = "1";
+        }
+
+        Integer pageNumber = Integer.valueOf(pageNumber1);
+
+        List<Item> items = itemService.getPage(pageNumber);
+        request.setAttribute("items", items);
+
+        Long countOfPage = itemService.countOfPage();
+        request.setAttribute("pageCount", countOfPage);
+        return "neworder";
+    }
+
+    @PostMapping("/neworder")
+    public String createOrder(HttpServletRequest request) {
+        request.setAttribute("items", itemService.getAll());
+        int totalSum = 0;
+        Integer id = Integer.valueOf(request.getParameter("id"));
+        if (id != null) {
+            String name = request.getParameter("name");
+            Integer price = Integer.valueOf(request.getParameter("price"));
+            Integer quantity = Integer.valueOf(
+                    request.getParameter("quantity"));
+            int sum = price * quantity;
+            request.setAttribute("sum",sum);
+            totalSum = totalSum + sum;
+            request.setAttribute("totalSum", totalSum);
+        }
+
+
+        return "redirect:/basket";
     }
 
     //read
-    @GetMapping ("myOrders")
-    public String getOrderByUserName(HttpServletRequest request){
+    @GetMapping("myOrders")
+    public String getOrderByUserName(HttpServletRequest request) {
 
         return "orders";
     }
 
     //update
     @PostMapping("/updateorder")
-    public String updateOrder(HttpServletRequest request){
+    public String updateOrder(HttpServletRequest request) {
         return null;
     }
 
     //delete
     @PostMapping("/deleteorder")
-    public String deleteOrder(HttpServletRequest request)
-    {
+    public String deleteOrder(HttpServletRequest request) {
         return "redirect:/orders";
     }
 

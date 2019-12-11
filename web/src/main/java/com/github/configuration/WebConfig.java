@@ -45,7 +45,8 @@ public class WebConfig {
     }
     @Bean
     public BookingController bookingController() {
-        return new BookingController(serviceConfig.orderService());
+        return new BookingController(serviceConfig.orderService(),
+                                     serviceConfig.itemService());
     }
 
     @Bean
