@@ -23,15 +23,13 @@
         }
     </style>
     <header class="header">
-        <form method="get">
-            <button class="new" type="submit" name="locale" value="en_US">
-                English
+        <form>
+            <button class="new"><a href="${requestScope['javax.servlet.forward.request_uri']}?locale=en"> English</a>
             </button>
-            <button class="new" type="submit" name="locale" value="ru_RU">
-                Русский
+            <button class="new"><a href="${requestScope['javax.servlet.forward.request_uri']}?locale=ru">
+                Русский</a>
             </button>
-            <button class="new" type="submit" name="locale" value="zh_CN">
-                中国
+            <button class="new"><a href="${requestScope['javax.servlet.forward.request_uri']}?locale=zh">中国</a>
             </button>
         </form>
 

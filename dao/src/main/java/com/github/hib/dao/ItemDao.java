@@ -5,7 +5,7 @@ import com.github.model.Item;
 import java.util.List;
 
 public interface ItemDao {
-    Item createItem(Item item, Integer categoryId);
+    Item createItem(Item item, String categoryName);
 
     Item readItem(String item_name);
 

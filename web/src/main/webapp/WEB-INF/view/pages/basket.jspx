@@ -26,8 +26,6 @@
         }
     </style>
     <body class="body">
-    <fmt:setLocale value="${locale}"/>
-    <fmt:setBundle basename="translations" var="msg"/>
     <table>
         <tr>
             <td width="150">id</td>

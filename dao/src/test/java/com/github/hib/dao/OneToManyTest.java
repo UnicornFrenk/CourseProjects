@@ -40,7 +40,7 @@ public class OneToManyTest {
         em.getTransaction().begin();
         em.persist(category);
         em.flush();
-        System.out.println(category);
+        System.out.println(category.getNameCategory());
         em.getTransaction().commit();
 
         Assertions.assertNotNull(category);

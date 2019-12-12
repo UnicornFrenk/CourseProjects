@@ -31,7 +31,7 @@ public class DefaultItemDao implements ItemDao {
     }
 
     @Override
-    public Item createItem(Item item1, Integer categoryId) {
+    public Item createItem(Item item1, String categoryName) {
         ItemEntity itemEntity = ItemConverter.toEntity(item1);
         itemEntity.setId(item1.getId());
         itemEntity.setName(item1.getItemName());
@@ -43,7 +43,7 @@ public class DefaultItemDao implements ItemDao {
 
 
         final Session session = sessionFactory.getCurrentSession();
-        CategoryEntity category = session.get(CategoryEntity.class, categoryId);
+        CategoryEntity category = session.get(CategoryEntity.class, categoryName);
         itemEntity.setCategory(category);
 
         category.getItems().add(itemEntity);

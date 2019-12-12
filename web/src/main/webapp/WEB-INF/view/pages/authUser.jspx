@@ -2,7 +2,7 @@
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:sec="http://www.springframework.org/security/tags"
-          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:spring="http://www.springframework.org/tags">
     <style>
         button.new {
             background: -moz-linear-gradient(#F5F5F5, #808080);
@@ -25,30 +25,26 @@
         }
     </style>
     <body class="body">
-    <fmt:setLocale value="${locale}"/>
-    <fmt:setBundle basename="translations" var="msg"/>
 
-    <h3 align="center"><fmt:message key="hi" bundle="${msg}"/> ${user.login} !
-        <fmt:message key="we.glad.to.see.you" bundle="${msg}"/></h3>
+    <h3 align="center"><spring:message code="hi"/> ${user.login} !
+        <spring:message code="we.glad.to.see.you"/></h3>
 
 
     <c:choose>
         <c:when test="${user.login == 'ADMIN'}">
             <a
-                    href="${pageContext.request.contextPath}/itemlistadmin"><fmt:message key="items" bundle="${msg}"/>
+                    href="${pageContext.request.contextPath}/itemlistadmin"><spring:message code="items"/>
             </a><br/>
-            <a href="${pageContext.request.contextPath}/users"><fmt:message
-                    key="users" bundle="${msg}"/></a><br/>
-            <a href="${pageContext.request.contextPath}/logout"><fmt:message
-                    key="logout" bundle="${msg}"/></a>
+            <a href="${pageContext.request.contextPath}/users"><spring:message code="users"/></a><br/>
+            <a href="${pageContext.request.contextPath}/logout"><spring:message code="logout"/></a>
 
             <br/>
         </c:when>
         <c:otherwise>
             <a
-                    href="${pageContext.request.contextPath}/itemlist"><fmt:message key="items" bundle="${msg}"/></a><br/>
+                    href="${pageContext.request.contextPath}/itemlist"><spring:message code="items"/></a><br/>
             <a href="${pageContext.request.contextPath}/neworder">
-                <fmt:message key="new.order" bundle="${msg}"/></a>
+                <spring:message code="new.order" /></a>
         </c:otherwise>
     </c:choose>
     </body>

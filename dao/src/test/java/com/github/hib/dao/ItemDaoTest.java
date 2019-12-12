@@ -50,9 +50,9 @@ public class ItemDaoTest {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setNameCategory("apple");
         Category category = categoryDao.createCategory(CategoryConverter.fromEntity(categoryEntity));
-        Integer categoryId = category.getIdCategory();
+        String categoryName = category.getNameCategory();
 
-        Integer id = itemDao.createItem(testItem, categoryId).getId();
+        Integer id = itemDao.createItem(testItem, categoryName).getId();
 
         Item item = itemDao.readItem(id);
 

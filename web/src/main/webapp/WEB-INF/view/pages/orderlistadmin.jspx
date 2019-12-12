@@ -2,7 +2,7 @@
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:sec="http://www.springframework.org/security/tags"
-          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:spring="http://www.springframework.org/tags">
     <style>
         button.new {
             background: -moz-linear-gradient(#F5F5F5, #808080);
@@ -23,18 +23,16 @@
         }
     </style>
     <body class="body">
-    <fmt:setLocale value="${locale}"/>
-    <fmt:setBundle basename="translations" var="msg"/>
-    <h3>Items list</h3>
+    <h3><spring:message code="items.list"/></h3>
 
     <table border="2">
         <tr>
-            <td width="150">orderId</td>
-            <td width="150">userName</td>
-            <td width="150">totalSum</td>
-            <td width="150">delAddress</td>
-            <td width="150">Update</td>
-            <td width="150">Delete</td>
+            <td width="150"><spring:message code="id"/></td>
+            <td width="150"><spring:message code="username"/></td>
+            <td width="150"><spring:message code="total.sum"/></td>
+            <td width="150"><spring:message code="del.address"/></td>
+            <td width="150"><spring:message code="update"/></td>
+            <td width="150"><spring:message code="delete"/></td>
 
         </tr>
         <c:forEach items="${items}" var="item">

@@ -1,8 +1,9 @@
-<jsp:root xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:jsp="http://java.sun.com/JSP/Page"
+
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core"
-          xmlns:sec="http://www.springframework.org/security/tags"
-          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+          xmlns:s="http://www.springframework.org/tags/form"
+          xmlns:spring="http://www.springframework.org/tags"
+          xmlns="http://www.w3.org/1999/xhtml" version="2.0">
     <style>
         body.body {
             background: darkgrey;
@@ -11,27 +12,23 @@
         }
     </style>
     <body class="body">
-    <fmt:setLocale value="${locale}"/>
-    <fmt:setBundle basename="translations" var="msg"/>
-
 
     <c:forEach var="user" items="user"/>
     <div class="form">
-        <h3><fmt:message key="log.in.in.system" bundle="${msg}"/></h3>
+        <h3><spring:message code="login.in.system"/></h3>
 
         <form method="post"
               action="${pageContext.request.contextPath}/login">
             <input type="text" name="login" value="${user.login}"/>
             <input type="password" name="password" value="${user.password}"/>
-            <button type="submit" value="Submit"><fmt:message key="submit"
-                                                              bundle="${msg}"/>
+            <button type="submit" value="Submit"><spring:message code="submit"/>
             </button>
 
         </form>
 
         <br/><br/>
         <a href="${pageContext.request.contextPath}/itemlist">
-            <fmt:message key="items" bundle="${msg}"/></a>
+            <spring:message code="items"/></a>
 
     </div>
 

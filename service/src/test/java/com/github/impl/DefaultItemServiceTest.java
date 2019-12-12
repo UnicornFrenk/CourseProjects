@@ -34,9 +34,9 @@ public class DefaultItemServiceTest {
     @Test
     public void createItemTest() {
         Item item = new Item(3, "nuts", "nuts", 1000, 500);
-        when(dao.createItem(item, 1)).thenReturn(item);
+        when(dao.createItem(item, "fruits")).thenReturn(item);
 
-        Item itemFromDb = service.createItem(item, 1);
+        Item itemFromDb = service.createItem(item, "fruits");
         System.out.println(itemFromDb);
         assertNotNull(itemFromDb);
         assertEquals(item.getItemName(), itemFromDb.getItemName());

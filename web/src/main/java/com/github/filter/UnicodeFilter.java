@@ -23,7 +23,7 @@ public class UnicodeFilter implements Filter {
         if (locale == null) {
             locale = (String) req.getSession().getAttribute("locale");
             if (locale == null) {
-                req.getSession().setAttribute("locale", "ru_RU");
+                req.getSession().setAttribute("locale", "ru");
             }
         } else {
             req.getSession().setAttribute("locale", locale);
