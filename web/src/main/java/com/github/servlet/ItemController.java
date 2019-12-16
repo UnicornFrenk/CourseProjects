@@ -77,7 +77,6 @@ public class ItemController {
     //delete
     @PostMapping("/deleteitem")
     public String deleteItem(HttpServletRequest request) {
-
         Integer id = Integer.parseInt(request.getParameter("id"));
         request.setAttribute("id", id);
         itemService.deleteItem(id);

@@ -33,7 +33,9 @@ public class DefaultPersonDao implements PersonDao {
                            person.getPassword(), person.getRole()));
         Session session = sessionFactory.getCurrentSession();
         session.save(personEntity);
-        return personEntity.getId();
+        Integer id = personEntity.getId();
+        person.setId(id);
+        return id;
     }
 
     @Override

@@ -36,7 +36,7 @@ public class HibernateConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactoryBean() {
+    public LocalSessionFactoryBean entityManagerFactory() {
         final LocalSessionFactoryBean sf = new LocalSessionFactoryBean();
         sf.setDataSource(dataSource());
         sf.setPackagesToScan("com.github.hib.entity");
@@ -49,7 +49,7 @@ public class HibernateConfig {
     public PlatformTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager
                 = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactoryBean().getObject());
+        transactionManager.setSessionFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
 

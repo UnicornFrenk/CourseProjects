@@ -42,18 +42,18 @@
         <c:forEach items="${items}" var="item">
             <tr>
                 <td>${item.id}</td>
-                <td>${item.name}</td>
-                <td>${item.description}</td>
-                <td>${item.category.nameCategory}</td>
-                <td>${item.quantity}</td>
-                <td>${item.price}</td>
+                <td>${item.itemName}</td>
+                <td>${item.itemDescription}</td>
+                <td>${item.itemCategory.nameCategory}</td>
+                <td>${item.itemQuantity}</td>
+                <td>${item.priceForOne}</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/updateitem?id=${item.id}"><spring:message
                             code="update.price"/></a>
                 </td>
                 <td>
                     <form method="post"
-                          action="${pageContext.request.contextPath}/deleteitem">
+                          action="${pageContext.request.contextPath}/deleteitem?id=${item.id}">
                         <input type="submit" value="Delete"/>
                     </form>
                 </td>

@@ -103,5 +103,6 @@ public class ItemDaoTest {
         List<Item> expected = itemDao.getAll();
         System.out.println(expected);
         Assertions.assertNotNull(expected);
+        Assertions.assertFalse(expected.isEmpty());
     }
 }
