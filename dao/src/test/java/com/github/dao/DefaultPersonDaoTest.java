@@ -52,6 +52,16 @@ public class DefaultPersonDaoTest {
 
 
     @Test
+    public void getById() {
+        Person person = new Person("Sofia","Sofia", Role.USER);
+        personDao.createPerson(person);
+        Person test =  personDao.getById(person.getId());
+        Integer actId = test.getId();
+        assertNotNull(actId);
+
+    }
+
+    @Test
     public void getAll() {
         List<Person> expected = personDao.getAll();
         assertNotNull(expected);

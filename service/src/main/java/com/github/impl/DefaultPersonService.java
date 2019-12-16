@@ -31,6 +31,11 @@ public class DefaultPersonService implements PersonService {
     }
 
     @Override
+    public Person getById(Integer id) {
+        return personDao.getById(id);
+    }
+
+    @Override
     @Transactional
     public Person getByRole(Role role) {
         return personDao.getByRole(role);
@@ -38,8 +43,8 @@ public class DefaultPersonService implements PersonService {
 
     @Override
     @Transactional
-    public void updatePerson(String login, String pass) {
-        personDao.updatePerson(login,pass);
+    public void updatePerson(int userId, String pass) {
+        personDao.updatePerson(userId,pass);
     }
 
     @Override
@@ -54,4 +59,20 @@ public class DefaultPersonService implements PersonService {
     public List<Person> getAll() {
         return personDao.getAll();
     }
+
+
+    @Override
+    @Transactional
+    public Person userName (String login, String password){
+        Person user = personDao.getByLogin(login);
+        if (user == null) {
+            return null;
+        }
+        if (user.getPassword().equals(password)) {
+            return user;
+        } else {
+            return null;
+        }
+    }
+
 }

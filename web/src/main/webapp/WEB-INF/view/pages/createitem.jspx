@@ -12,8 +12,7 @@
     </style>
     <body class="body">
     <h2><spring:message code="create.new.item"/></h2>
-    <c:set var="item"/>
-    <form method="post" action="${pageContext.request.contextPath}/createitem">
+    <form action="${pageContext.request.contextPath}/createitem">
         <table border="2">
             <tr>
                 <td><spring:message code="name"/></td>
@@ -25,7 +24,7 @@
 
             </tr>
             <tr>
-                <td><input type="text" name="name" value="${item.name}"/></td>
+                <td><input type="text" name="name" value="${item.itemName}"/></td>
                 <td><input type="text" name="description" value="${item.description}"/></td>
                 <td><input type="text" name="quantity" value="${item.quantity}"/></td>
                 <td><select name="categoryName">

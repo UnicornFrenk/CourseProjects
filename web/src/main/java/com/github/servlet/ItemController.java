@@ -37,13 +37,16 @@ public class ItemController {
         return "createitem";
     }
 
+
+    //todo
     @PostMapping("/createitem")
     public String createItemPost(HttpServletRequest rq){
         String name = rq.getParameter("name");
         String description = rq.getParameter("description");
         Integer quantity = Integer.valueOf(rq.getParameter("quantity"));
         Integer price = Integer.valueOf(rq.getParameter("price"));
-        String category = rq.getParameter("categoryName");
+        String category = rq.getParameter("cat");
+        rq.setAttribute("categoryName",category);
         Item item = new Item(name,description,quantity,price);
         rq.setAttribute("item", item);
         itemService.createItem(item,category);

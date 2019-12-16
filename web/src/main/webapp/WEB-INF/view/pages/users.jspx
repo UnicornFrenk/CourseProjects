@@ -42,13 +42,9 @@
                         </button>
                     </form>
                 </td>
-                <td width="150" align="center">
-                    <form method="post"
-                          action="${pageContext.request.contextPath}/updateuser">
-                        <button class="new" type="submit" name="updateuser"
-                                value="${user.id}"><spring:message code="update"/>
-                        </button>
-                    </form>
+                <td>
+                    <a href="${pageContext.request.contextPath}/updatePassword?id=${user.id}"><spring:message
+                            code="update"/></a>
                 </td>
             </tr>
         </c:forEach>

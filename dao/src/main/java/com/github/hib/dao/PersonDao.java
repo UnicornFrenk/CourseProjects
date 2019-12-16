@@ -11,9 +11,10 @@ public interface PersonDao {
     int createPerson(Person person);
 
     Person getByLogin(String login);
+    Person getById(Integer id);
     Person getByRole(Role role);
 
-    void updatePerson(String login, String pass);
+    void updatePerson(int userId, String pass);
     void deletePerson(Integer id);
     List<Person> getPersons();
     List<Person> getAll();

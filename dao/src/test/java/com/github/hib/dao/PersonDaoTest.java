@@ -64,11 +64,11 @@ public class PersonDaoTest {
     }
 
     @Test
-    public void updateSession() {
+    public void update() {
         final PersonEntity person = savePerson();
-        personDao.updatePerson(person.getLogin(), "www");
+        personDao.updatePerson(person.getId(), "www");
         System.out.println(person);
-        Person personFromDb = personDao.getByLogin(person.getLogin());
+        Person personFromDb = personDao.getById(person.getId());
         System.out.println(personFromDb);
         Assertions.assertEquals(personFromDb.getPassword(), "www");
     }

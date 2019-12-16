@@ -34,7 +34,7 @@ public class DefaultUserServiceTest {
     PersonDao dao;
 
     @InjectMocks
-    DefaultSecurityService service;
+    DefaultPersonService service;
 
     @InjectMocks
     DefaultPersonService personService;
@@ -96,11 +96,11 @@ public class DefaultUserServiceTest {
 
     @Test
     public void updateUserTest() {
-        doNothing().when(dao).updatePerson(any(), any());
+        doNothing().when(dao).updatePerson(anyInt(), any());
 
-        personService.updatePerson("user1", "4321");
+        personService.updatePerson(1, "4321");
 
-        verify(dao).updatePerson("user1", "4321");
+        verify(dao).updatePerson(1, "4321");
     }
 
     @Test

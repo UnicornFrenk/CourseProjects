@@ -51,6 +51,18 @@ public class DefaultPersonDao implements PersonDao {
 
     @Override
     @Transactional
+    public Person getById(Integer id) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        PersonEntity personEntity = (PersonEntity) currentSession
+                .createQuery(
+                        "from PersonEntity p where p.id=:id")
+                .setParameter("id", id)
+                .uniqueResult();
+        return PersonConverter.fromEntity(personEntity);
+    }
+
+    @Override
+    @Transactional
     public Person getByRole(Role role) {
         PersonEntity personEntity;
         try {
@@ -69,12 +81,12 @@ public class DefaultPersonDao implements PersonDao {
 
     @Override
     @Transactional
-    public void updatePerson(String login, String pass) {
+    public void updatePerson(int userId, String pass) {
         pass = "www";
         final Session session = sessionFactory.getCurrentSession();
         session.createQuery(
-                "update PersonEntity p set p.password = :pass where p.login = :login")
-               .setParameter("login", login)
+                "update PersonEntity p set p.password = :pass where p.id =:id")
+               .setParameter("id", userId)
                .setParameter("pass", pass)
                .executeUpdate();
     }
