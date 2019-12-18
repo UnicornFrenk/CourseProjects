@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ItemService {
 
-    Item createItem(Item item, String categoryName);
+    Item createItem(Item item, Integer idCategory);
 
     Item readItem(String item_name);
     Item readItem(Integer id);

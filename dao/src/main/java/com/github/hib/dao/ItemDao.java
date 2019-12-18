@@ -2,10 +2,11 @@ package com.github.hib.dao;
 
 import com.github.model.Item;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface ItemDao {
-    Item createItem(Item item, String categoryName);
+    Item createItem(Item item, Integer idCategory);
 
     Item readItem(String item_name);
 

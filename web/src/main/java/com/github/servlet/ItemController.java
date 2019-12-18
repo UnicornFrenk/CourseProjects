@@ -2,6 +2,7 @@ package com.github.servlet;
 
 import com.github.CategoryService;
 import com.github.ItemService;
+import com.github.model.Category;
 import com.github.model.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,8 @@ public class ItemController {
     //create
     @GetMapping("/createitem")
     public String createItem(HttpServletRequest rq) {
+        List<Category> categories = categoryService.getAll();
+        rq.setAttribute("categories",categories);
         return "createitem";
     }
 
@@ -49,7 +52,7 @@ public class ItemController {
         rq.setAttribute("categoryName",category);
         Item item = new Item(name,description,quantity,price);
         rq.setAttribute("item", item);
-        itemService.createItem(item,category);
+        //itemService.createItem(item);
         return "redirect:/itemlistadmin";
     }
 

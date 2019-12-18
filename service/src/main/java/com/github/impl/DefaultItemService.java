@@ -22,8 +22,8 @@ public class DefaultItemService implements ItemService {
 
     @Override
     @Transactional
-    public Item createItem(Item item, String categoryName) {
-        return itemDao.createItem(item, categoryName);
+    public Item createItem(Item item, Integer idCategory) {
+        return itemDao.createItem(item, idCategory);
     }
 
     @Override

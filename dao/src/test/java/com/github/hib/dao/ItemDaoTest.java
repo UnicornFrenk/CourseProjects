@@ -18,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,14 +46,16 @@ public class ItemDaoTest {
 
     @Test
     public void createItem() {
-        Item testItem = new Item("pomme", "pomme", 3, 200);
+        Item testItem = new Item(100, "pomme", "pomme", 300,
+                                 200);
 
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setNameCategory("apple");
         Category category = categoryDao.createCategory(CategoryConverter.fromEntity(categoryEntity));
-        String categoryName = category.getNameCategory();
+        Integer category1 = category.getIdCategory();
 
-        Integer id = itemDao.createItem(testItem, categoryName).getId();
+        Integer id = itemDao.createItem(testItem, category1).getId();
+        System.out.println(itemDao.readItem(id));
 
         Item item = itemDao.readItem(id);
 
