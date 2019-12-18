@@ -32,13 +32,13 @@ public class CategoryController {
     }
 
     //read
-    @GetMapping("/category")
-    public String getCategoryByItemName(HttpServletRequest request) {
-        String name = request.getParameter("name");
-
-        categoryService.readCategory(name);
-        return "items";
-    }
+//    @GetMapping("/category")
+//    public String getCategoryByItemName(HttpServletRequest request) {
+//        String name = request.getParameter("name");
+//
+//        categoryService.readCategory(name);
+//        return "items";
+//    }
 
 
     //update

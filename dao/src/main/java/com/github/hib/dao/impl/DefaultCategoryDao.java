@@ -41,12 +41,12 @@ public class DefaultCategoryDao implements CategoryDao {
     }
 
     @Override
-    public Category readCategory(String category_name) {
+    public Category readCategory(Integer idCategory) {
         final CategoryEntity cEntity = (CategoryEntity) sessionFactory
                 .getCurrentSession()
                 .createQuery(
-                        "from CategoryEntity c where c.nameCategory=:category_name")
-                .setParameter("category_name",category_name)
+                        "from CategoryEntity c where c.idCategory=:idCategory")
+                .setParameter("idCategory",idCategory)
                 .getSingleResult();
         return CategoryConverter.fromEntity(cEntity);
     }

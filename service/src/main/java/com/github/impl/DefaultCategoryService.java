@@ -25,9 +25,9 @@ public class DefaultCategoryService implements CategoryService {
 
     @Override
     @Transactional
-    public Category readCategory(String category_name) {
+    public Category readCategory(Integer idCategory) {
         return categoryDao
-                .readCategory(category_name);
+                .readCategory(idCategory);
     }
 
     @Override

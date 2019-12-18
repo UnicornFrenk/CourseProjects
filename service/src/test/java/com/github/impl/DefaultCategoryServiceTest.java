@@ -46,13 +46,12 @@ public class DefaultCategoryServiceTest {
 
     @Test
     public void readCategoryTest() {
-        Category category = new Category(null, "apple");
-        when(dao.readCategory("apple")).thenReturn(category);
+        Category category = new Category(100, "apple");
+        when(dao.readCategory(100)).thenReturn(category);
 
-        Category catFromDb = dao.readCategory("apple");
-        String expName = "apple";
+        Category catFromDb = dao.readCategory(100);
 
-        assertEquals(expName, catFromDb.getNameCategory());
+        assertEquals((Integer)100, catFromDb.getIdCategory());
     }
 
     @Test
@@ -66,8 +65,8 @@ public class DefaultCategoryServiceTest {
     @Test
     public void deleteCategoryTest() {
 
-        when(dao.readCategory("apple")).thenReturn(new Category());
-        Integer id = service.readCategory("apple").getIdCategory();
+        when(dao.readCategory(100)).thenReturn(new Category());
+        Integer id = service.readCategory(100).getIdCategory();
 
         assertNull(id);
     }
@@ -83,9 +82,9 @@ public class DefaultCategoryServiceTest {
 
     @Test
     public void testCategoryNotExist() {
-        when(dao.readCategory("fruits")).thenReturn(null);
+        when(dao.readCategory(100)).thenReturn(null);
 
-        Category name = service.readCategory("fruits");
+        Category name = service.readCategory(100);
 
         assertNull(name);
     }

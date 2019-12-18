@@ -45,7 +45,7 @@ CategoryDao categoryDao;
     @Test
     public void read() {
         final CategoryEntity category = saveCategory();
-        categoryDao.readCategory(category.getNameCategory());
+        categoryDao.readCategory(category.getIdCategory());
 
         Assertions.assertNotNull(category.getNameCategory());
     }
@@ -53,11 +53,11 @@ CategoryDao categoryDao;
     @Test
     public void updateCategory() {
         CategoryEntity category = saveCategory();
-
-        categoryDao.updateCategory("tasty", category.getIdCategory());
+        Integer id = category.getIdCategory();
+        categoryDao.updateCategory("tasty", id);
 
         Category categoryFromDb =
-                categoryDao.readCategory("tasty");
+                categoryDao.readCategory(id);
         System.out.println(categoryFromDb);
         Assertions.assertEquals("tasty", categoryFromDb.getNameCategory());
     }

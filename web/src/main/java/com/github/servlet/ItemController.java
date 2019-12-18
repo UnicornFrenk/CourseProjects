@@ -48,11 +48,11 @@ public class ItemController {
         String description = rq.getParameter("description");
         Integer quantity = Integer.valueOf(rq.getParameter("quantity"));
         Integer price = Integer.valueOf(rq.getParameter("price"));
-        String category = rq.getParameter("cat");
-        rq.setAttribute("categoryName",category);
+        List<Category> categories = categoryService.getAll();
+        rq.setAttribute("categories",categories);
+        Integer idCategory = Integer.valueOf(rq.getParameter("idCategory"));
         Item item = new Item(name,description,quantity,price);
-        rq.setAttribute("item", item);
-        //itemService.createItem(item);
+        itemService.createItem(item, idCategory);
         return "redirect:/itemlistadmin";
     }
 

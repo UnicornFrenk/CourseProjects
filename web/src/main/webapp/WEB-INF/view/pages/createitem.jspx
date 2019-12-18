@@ -13,7 +13,7 @@
     </style>
     <body class="body">
     <h2><spring:message code="create.new.item"/></h2>
-    <form action="${pageContext.request.contextPath}/createitem">
+    <form method="post" action="${pageContext.request.contextPath}/createitem">
         <table border="2">
             <tr>
                 <td><spring:message code="name"/></td>
@@ -21,11 +21,9 @@
                 <td><spring:message code="total.quantity"/></td>
                 <td><spring:message code="category"/></td>
                 <td><spring:message code="price.for.one"/></td>
-
-
             </tr>
             <tr>
-                <td><input type="text" name="name" value="${item.itemName}"/></td>
+                <td><input type="text" name="name" value="${item.name}"/></td>
                 <td><input type="text" name="description" value="${item.description}"/></td>
                 <td><input type="text" name="quantity" value="${item.quantity}"/></td>
                 <td><select name="categories">
@@ -33,7 +31,6 @@
                         <option value="${categories.idCategory}">${categories.nameCategory}</option>
                     </c:forEach>
                 </select></td>
-                <input type="hidden" value="${item.id}"/>
                 <td><input type="text" name="price" value="${item.price}"/>
                 </td>
             </tr>
