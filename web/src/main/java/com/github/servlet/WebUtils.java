@@ -5,11 +5,16 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import com.github.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 
 
 public class WebUtils {
@@ -45,6 +50,17 @@ public class WebUtils {
         } else {
             return Optional.empty();
         }
+    }
+
+    public static boolean isUserNotAuth(Authentication authentication) {
+        return authentication == null || "anonymousUser".equals(authentication.getPrincipal());
+    }
+
+    public static List<GrantedAuthority> getAuthorities(Person person) {
+        String role = "ROLE_" + person.getRole().name();
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add((GrantedAuthority) () -> role);
+        return grantedAuthorities;
     }
 
 }

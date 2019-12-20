@@ -31,14 +31,13 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-    //read
-//    @GetMapping("/category")
-//    public String getCategoryByItemName(HttpServletRequest request) {
-//        String name = request.getParameter("name");
-//
-//        categoryService.readCategory(name);
-//        return "items";
-//    }
+    @GetMapping("/category")
+    public String getCategory(HttpServletRequest request) {
+        Integer id = Integer.valueOf(request.getParameter("idCategory"));
+
+        categoryService.readCategory(id);
+        return "items";
+    }
 
 
     //update

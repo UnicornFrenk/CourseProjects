@@ -25,6 +25,7 @@ public class PersonEntity {
     @Column(name = "password")
     private String password;
     @Column
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
     @OneToOne(mappedBy= "person", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})

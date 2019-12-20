@@ -68,9 +68,8 @@
     </c:forEach>
     <br/>
     <br/>
-
-    <button class="new"><a
-            href="${pageContext.request.contextPath}/createitem">create new item</a>
+    <button class="new">
+        <a href="${pageContext.request.contextPath}/createitem">create new item</a>
     </button>
     <br/>
     </body>

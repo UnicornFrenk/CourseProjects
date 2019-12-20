@@ -30,23 +30,19 @@
         <spring:message code="we.glad.to.see.you"/></h3>
 
 
-    <c:choose>
-        <c:when test="${user.login == 'ADMIN'}">
-            <a
-                    href="${pageContext.request.contextPath}/itemlistadmin"><spring:message code="items"/>
-            </a><br/>
-            <a href="${pageContext.request.contextPath}/users"><spring:message code="users"/></a><br/>
-            <a href="${pageContext.request.contextPath}/logout"><spring:message code="logout"/></a>
+    <sec:authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
+        <a href="${pageContext.request.contextPath}/itemlistadmin"><spring:message code="items"/>
+        </a><br/>
+        <a href="${pageContext.request.contextPath}/users"><spring:message code="users"/></a><br/>
+        <a href="${pageContext.request.contextPath}/logout"><spring:message code="logout"/></a>
 
-            <br/>
-        </c:when>
-        <c:otherwise>
-            <a
-                    href="${pageContext.request.contextPath}/itemlist"><spring:message code="items"/></a><br/>
-            <a href="${pageContext.request.contextPath}/neworder">
-                <spring:message code="new.order" /></a>
-        </c:otherwise>
-    </c:choose>
+        <br/>
+    </sec:authorize>
+    <sec:authorize access="hasRole('ROLE_USER') and isAuthenticated()">
+        <a href="${pageContext.request.contextPath}/itemlist"><spring:message code="items"/></a><br/>
+        <a href="${pageContext.request.contextPath}/neworder">
+            <spring:message code="new.order"/></a>
+    </sec:authorize>
     </body>
 
 </jsp:root>
