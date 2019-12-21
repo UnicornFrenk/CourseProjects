@@ -35,8 +35,9 @@
                 </td>
             </tr>
         </table>
-
         <a href="${pageContext.request.contextPath}/itemlistadmin"><spring:message code="create"/></a>
     </form>
+
+
     </body>
 </jsp:root>

@@ -41,7 +41,6 @@ public class ItemController {
     }
 
 
-    //todo
     @PostMapping("/createitem")
     public String createItemPost(HttpServletRequest rq){
         String name = rq.getParameter("name");
@@ -50,7 +49,7 @@ public class ItemController {
         Integer price = Integer.valueOf(rq.getParameter("price"));
         List<Category> categories = categoryService.getAll();
         rq.setAttribute("categories",categories);
-        Integer idCategory = Integer.valueOf(rq.getParameter("idCategory"));
+        Integer idCategory = Integer.valueOf(rq.getParameter("categories"));
         Item item = new Item(name,description,quantity,price);
         itemService.createItem(item, idCategory);
         return "redirect:/itemlistadmin";
