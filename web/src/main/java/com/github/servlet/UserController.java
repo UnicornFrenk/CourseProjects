@@ -2,6 +2,7 @@ package com.github.servlet;
 
 import com.github.PersonService;
 import com.github.hib.entity.Role;
+import com.github.model.Item;
 import com.github.model.Person;
 import com.github.rq.CreatePersonRq;
 import org.slf4j.Logger;
@@ -57,25 +58,26 @@ public class UserController {
 
 
     //update
-    @GetMapping("/updatePassword")
+    @GetMapping("/update")
     public String updatePerson(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
         Person person = personService.getById(id);
-        request.setAttribute("person", person);
-        return "redirect:/updateperson";
+        request.setAttribute("users", person);
+
+        return "update";
     }
 
 
-    @PostMapping("/updatePassword")
+    @PostMapping("/update")
     public String updateUserPassword(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         String login = request.getParameter("login");
         String password = request.getParameter("pass");
-        Person person = personService.getByLogin(login);
-        request.setAttribute("person", person);
+        Person person =personService.getById(id);
+        request.setAttribute("users", person);
         personService.updatePerson(id, password);
         log.info("person updated:{} at {}", id, LocalDateTime.now());
-        return "users";
+        return "redirect:/users";
     }
 
     //delete

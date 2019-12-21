@@ -11,7 +11,7 @@
         }
     </style>
     <body class="body">
-    <form action="${pageContext.request.contextPath}/updatePassword">
+    <form method="post" action="${pageContext.request.contextPath}/update">
         <table border="2">
             <tr>
                 <td><spring:message code="id"/></td>
@@ -20,12 +20,12 @@
             </tr>
 
             <tr>
-                <td>${person.id}</td>
-                <td>${person.login}</td>
-                <td>${person.password}</td>
-                <input type="hidden" name="id" value="${person.id}"/>
+                <td>${users.id}</td>
+                <td>${users.login}</td>
+                <td>${users.password}</td>
+                <input type="hidden" name="id" value="${users.id}"/>
                 <td><input type="text" name="pass"
-                           value="${person.password}"/></td>
+                           value="${users.password}"/></td>
                 <td><input type="submit" value="Update"/></td>
             </tr>
         </table>

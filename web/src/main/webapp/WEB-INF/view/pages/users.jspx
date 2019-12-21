@@ -43,7 +43,7 @@
                     </form>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/updatePassword?id=${user.id}"><spring:message
+                    <a href="${pageContext.request.contextPath}/update?id=${user.id}"><spring:message
                             code="update"/></a>
                 </td>
             </tr>

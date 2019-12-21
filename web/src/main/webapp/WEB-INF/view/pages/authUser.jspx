@@ -26,28 +26,30 @@
     </style>
     <body class="body">
 
+    <sec:authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
+        <h3 align="center"><spring:message code="hi"/>
+            <sec:authentication property="login"/>
+            <spring:message code="we.glad.to.see.you"/></h3>
+        <button class="new"><a href="${pageContext.request.contextPath}/itemlistadmin"><spring:message
+                code="items"/></a></button>
 
-    <sec:authorize access="isAuthenticated()">
-        <h3 align="center"><spring:message code="hi"/>! <sec:authentication property="name"/><spring:message
-                code="we.glad.to.see.you"/></h3>
-        <sec:authorize access="hasRole('ROLE_ADMIN')">
-            <button class="new"><a href="${pageContext.request.contextPath}/itemlistadmin"><spring:message
-                    code="items"/></a></button>
+        <button class="new"><a href="${pageContext.request.contextPath}/users"><spring:message code="users"/></a>
+        </button>
+        <button class="new"><a href="${pageContext.request.contextPath}/logout"><spring:message code="logout"/></a>
+        </button>
 
-            <button class="new"><a href="${pageContext.request.contextPath}/users"><spring:message code="users"/></a>
-            </button>
-            <button class="new"><a href="${pageContext.request.contextPath}/logout"><spring:message code="logout"/></a>
-            </button>
-
-            <br/>
-        </sec:authorize>
-        <sec:authorize access="hasRole('ROLE_USER')">
-            <button class="new"><a href="${pageContext.request.contextPath}/itemlist"><spring:message code="items"/></a>
-            </button>
-            <button class="new"><a href="${pageContext.request.contextPath}/neworder">
-                <spring:message code="new.order"/></a></button>
-        </sec:authorize>
+        <br/>
     </sec:authorize>
+    <sec:authorize access="hasRole('USER')">
+        <h3 align="center"><spring:message code="hi"/>
+            <sec:authentication property="login"/>
+            <spring:message code="we.glad.to.see.you"/></h3>
+        <button class="new"><a href="${pageContext.request.contextPath}/itemlist"><spring:message code="items"/></a>
+        </button>
+        <button class="new"><a href="${pageContext.request.contextPath}/neworder">
+            <spring:message code="new.order"/></a></button>
+    </sec:authorize>
+
     </body>
 
 </jsp:root>

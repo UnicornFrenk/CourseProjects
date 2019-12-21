@@ -28,6 +28,7 @@ public class BookingController {
     ItemService itemService;
 
     public BookingController(OrderService orderService, ItemService itemService) {
+
         this.orderService = orderService;
         this.itemService = itemService;
 
@@ -55,7 +56,6 @@ public class BookingController {
     @PostMapping("/neworder")
     public String createOrder(HttpServletRequest request) {
         request.setAttribute("items", itemService.getAll());
-        int totalSum = 0;
         Integer id = Integer.valueOf(request.getParameter("id"));
         if (id != null) {
             String name = request.getParameter("name");
@@ -63,13 +63,9 @@ public class BookingController {
             Integer quantity = Integer.valueOf(
                     request.getParameter("quantity"));
             int sum = price * quantity;
-            request.setAttribute("sum",sum);
-            totalSum = totalSum + sum;
-            request.setAttribute("totalSum", totalSum);
+            request.setAttribute("totalprice",sum);
         }
-
-
-        return "redirect:/basket";
+        return "neworder";
     }
 
     //read

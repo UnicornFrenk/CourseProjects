@@ -56,11 +56,8 @@ public class WebUtils {
         return authentication == null || "anonymousUser".equals(authentication.getPrincipal());
     }
 
-    public static List<GrantedAuthority> getAuthorities(Person person) {
-        String role = "ROLE_" + person.getRole().name();
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add((GrantedAuthority) () -> role);
-        return grantedAuthorities;
-    }
+
+
+
 
 }

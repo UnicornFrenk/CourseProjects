@@ -4,21 +4,21 @@ import com.github.hib.dao.converters.PersonConverter;
 import com.github.hib.dao.PersonDao;
 import com.github.hib.entity.PersonEntity;
 import com.github.hib.entity.Role;
-import com.github.hib.util.EntityManagerUtil;
 import com.github.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DefaultPersonDao implements PersonDao {
+
     private static final Logger log = LoggerFactory.getLogger(
             DefaultPersonDao.class);
+
     private final SessionFactory sessionFactory;
 
     public DefaultPersonDao(SessionFactory sessionFactory) {
@@ -54,37 +54,27 @@ public class DefaultPersonDao implements PersonDao {
     @Override
     @Transactional
     public Person getById(Integer id) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        PersonEntity personEntity = (PersonEntity) currentSession
-                .createQuery(
-                        "from PersonEntity p where p.id=:id")
-                .setParameter("id", id)
-                .uniqueResult();
+        final PersonEntity personEntity = sessionFactory.getCurrentSession()
+                                                    .get(PersonEntity.class, id);
         return PersonConverter.fromEntity(personEntity);
     }
 
     @Override
     @Transactional
     public Person getByRole(Role role) {
-        PersonEntity personEntity;
-        try {
-            personEntity = (PersonEntity) EntityManagerUtil.getEntityManager()
-                                                           .createQuery(
-                                                                   "from PersonEntity p where p.role = :role")
-                                                           .setParameter("role",
-                                                                         role)
-                                                           .getSingleResult();
-        } catch (NoResultException e) {
-            log.info("user not found by login{}", role);
-            personEntity = null;
-        }
+        final Session session = sessionFactory.getCurrentSession();
+        PersonEntity personEntity = (PersonEntity) session.createQuery(
+                "from PersonEntity p where p.role =:role")
+                                                          .setParameter(
+                                                                  "role",
+                                                                  role);
+
         return PersonConverter.fromEntity(personEntity);
     }
 
     @Override
     @Transactional
     public void updatePerson(int userId, String pass) {
-        pass = "www";
         final Session session = sessionFactory.getCurrentSession();
         session.createQuery(
                 "update PersonEntity p set p.password = :pass where p.id =:id")

@@ -36,6 +36,11 @@
         <put-attribute name="body" value="/WEB-INF/view/pages/userpage.jspx"/>
     </definition>
 
+    <definition name="update" extends="default">
+        <put-attribute name="body"
+                       value="/WEB-INF/view/pages/updateperson.jspx"/>
+    </definition>
+
     <definition name="users" extends="default">
         <put-attribute name="body" value="/WEB-INF/view/pages/users.jspx"/>
     </definition>
