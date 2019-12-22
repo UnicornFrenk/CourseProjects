@@ -47,7 +47,9 @@ public class PersonDaoTest {
 
     @Test
     public void createPerson() {
-        PersonEntity personForTest = new PersonEntity(null, "log", "pass", Role.USER, new PersonDetails());
+        PersonEntity personForTest = new PersonEntity(null, "log", "pass",
+                                                      Role.ROLE_USER,
+                                                      new PersonDetails());
         personDao.createPerson(PersonConverter.fromEntity(personForTest));
         System.out.println(personForTest);
 

@@ -27,15 +27,15 @@
     <p style="background-color: darkgrey">
         <strong><i> Items list</i></strong></p>
     <br/>
-    <form oninput="result.value=(cm.value*price)">
+    <form action="${pageContext.request.contextPath}/neworder" oninput="result.value=(cm.value*price)">
         <table border="2">
             <tr>
-                <td width="150">id</td>
-                <td width="150">Name</td>
-                <td width="150">Description</td>
-                <td width="150">Total Quantity</td>
-                <td width="150">Price For One</td>
-                <td width="150">Quantity</td>
+                <td width="150"><spring:message code="id"/></td>
+                <td width="150"><spring:message code="name"/></td>
+                <td width="150"><spring:message code="description"/></td>
+                <td width="150"><spring:message code="total.quantity"/></td>
+                <td width="150"><spring:message code="price.for.one"/></td>
+                <td width="150"><spring:message code="quantity"/></td>
 
 
             </tr>
@@ -50,7 +50,8 @@
                 </tr>
             </c:forEach>
         </table>
-        <p>сумма заказа: <output name="result" >0</output></p>
+        <p><spring:message code="total.sum"/>: <output name="result">0</output></p>
+        <input type="submit" value="submit"/>
     </form>
     <c:forEach begin="1" end="${pageCount}" var="pageNumber">
         <button class="new"><a

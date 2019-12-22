@@ -31,7 +31,7 @@ public class DefaultPersonDaoTest {
 
     @Test
     public void create() {
-        Person test = new Person("Lola","Lola", Role.USER);
+        Person test = new Person("Lola","Lola", Role.ROLE_USER);
         personDao.createPerson(test);
         String login = test.getLogin();
         String exp = "Lola";
@@ -41,7 +41,7 @@ public class DefaultPersonDaoTest {
 
     @Test
     public void getByLogin() {
-        Person person = new Person("Sofia","Sofia", Role.USER);
+        Person person = new Person("Sofia","Sofia", Role.ROLE_USER);
         personDao.createPerson(person);
         Person test =  personDao.getByLogin("Sofia");
         String password = test.getPassword();
@@ -53,7 +53,7 @@ public class DefaultPersonDaoTest {
 
     @Test
     public void getById() {
-        Person person = new Person("Sofia","Sofia", Role.USER);
+        Person person = new Person("Sofia","Sofia", Role.ROLE_USER);
         personDao.createPerson(person);
         Person test =  personDao.getById(person.getId());
         Integer actId = test.getId();
@@ -69,10 +69,10 @@ public class DefaultPersonDaoTest {
 
     @Test
     public void getRole() {
-        Person person = new Person("Sofia","Sofia", Role.USER);
+        Person person = new Person("Sofia","Sofia", Role.ROLE_USER);
         personDao.createPerson(person);
         Role role = personDao.getByLogin("Sofia").getRole();
-        Role exp = Role.USER;
+        Role exp = Role.ROLE_USER;
         assertEquals( exp,role);
 
     }

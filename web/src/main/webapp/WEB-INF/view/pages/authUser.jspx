@@ -2,7 +2,8 @@
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:sec="http://www.springframework.org/security/tags"
-          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:spring="http://www.springframework.org/tags">
+          version="2.0" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+          xmlns:spring="http://www.springframework.org/tags">
     <style>
         button.new {
             background: -moz-linear-gradient(#F5F5F5, #808080);
@@ -35,12 +36,12 @@
 
         <button class="new"><a href="${pageContext.request.contextPath}/users"><spring:message code="users"/></a>
         </button>
-        <button class="new"><a href="${pageContext.request.contextPath}/logout"><spring:message code="logout"/></a>
-        </button>
+        <!--<button class="new"><a href="${pageContext.request.contextPath}/logout"><spring:message code="logout"/></a>-->
+        <!--</button>-->
 
         <br/>
     </sec:authorize>
-    <sec:authorize access="hasRole('USER')">
+    <sec:authorize access="hasRole('ROLE_USER') and isAuthenticated()">
         <h3 align="center"><spring:message code="hi"/>
             <sec:authentication property="login"/>
             <spring:message code="we.glad.to.see.you"/></h3>
@@ -49,6 +50,8 @@
         <button class="new"><a href="${pageContext.request.contextPath}/neworder">
             <spring:message code="new.order"/></a></button>
     </sec:authorize>
+
+
 
     </body>
 

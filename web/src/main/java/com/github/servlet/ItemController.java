@@ -51,6 +51,7 @@ public class ItemController {
         rq.setAttribute("categories",categories);
         Integer idCategory = Integer.valueOf(rq.getParameter("categories"));
         Item item = new Item(name,description,quantity,price);
+        rq.setAttribute("item",item);
         itemService.createItem(item, idCategory);
         return "redirect:/itemlistadmin";
     }

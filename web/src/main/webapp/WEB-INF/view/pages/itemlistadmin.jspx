@@ -23,8 +23,6 @@
         }
     </style>
     <body class="body">
-    <fmt:setLocale value="${locale}"/>
-    <fmt:setBundle basename="translations" var="msg"/>
     <h3>Items list</h3>
 
     <table border="2">
@@ -69,7 +67,7 @@
     <br/>
     <br/>
     <button class="new">
-        <a href="${pageContext.request.contextPath}/createitem">create new item</a>
+        <a href="${pageContext.request.contextPath}/createitem"><spring:message code="create.new.item"/></a>
     </button>
     <br/>
     </body>

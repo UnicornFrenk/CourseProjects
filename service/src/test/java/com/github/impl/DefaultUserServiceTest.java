@@ -13,12 +13,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import static com.github.hib.entity.Role.ROLE_USER;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.hib.entity.Role.USER;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -85,11 +85,11 @@ public class DefaultUserServiceTest {
     @Test
     public void getRoleTest() {
 
-        Person person = new Person("null", "null", USER);
+        Person person = new Person("null", "null", ROLE_USER);
         when(dao.getByLogin("null")).thenReturn(person);
 
         Role personFromDb = dao.getByLogin("null").getRole();
-        Role expRole = USER;
+        Role expRole = ROLE_USER;
         assertNotNull(personFromDb);
         assertEquals(expRole, personFromDb);
     }
@@ -113,18 +113,18 @@ public class DefaultUserServiceTest {
 
     @Test
     public void getByRoleTest() {
-        Person person = new Person("null", "null", USER);
-        when(dao.getByRole(USER)).thenReturn(person);
+        Person person = new Person("null", "null", ROLE_USER);
+        when(dao.getByRole(ROLE_USER)).thenReturn(person);
 
-        Role personFromDb = personService.getByRole(USER).getRole();
+        Role personFromDb = personService.getByRole(ROLE_USER).getRole();
 
         assertNotNull(personFromDb);
-        assertEquals(USER, personFromDb);
+        assertEquals(ROLE_USER, personFromDb);
     }
 
     @Test
     public void getByLoginRoTest() {
-        Person person = new Person("null", "null", USER);
+        Person person = new Person("null", "null", ROLE_USER);
         when(dao.getByLogin("null")).thenReturn(person);
 
         Person personByLogin = personService.getByLogin("null");

@@ -43,6 +43,11 @@ public class WebConfig {
     }
 
     @Bean
+    public CategoryController categoryController() {
+        return new CategoryController(serviceConfig.categoryService());
+    }
+
+    @Bean
     public BookingController bookingController() {
         return new BookingController(serviceConfig.orderService(),
                                      serviceConfig.itemService());

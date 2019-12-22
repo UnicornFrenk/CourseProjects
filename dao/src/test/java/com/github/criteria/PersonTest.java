@@ -16,9 +16,7 @@ import javax.persistence.criteria.Root;
 
 import java.util.List;
 
-import static com.github.hib.entity.Role.ADMIN;
 
-import static com.github.hib.entity.Role.USER;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonTest {
@@ -28,22 +26,23 @@ public class PersonTest {
             EntityManager em = EntityManagerUtil.getEntityManager();
             em.getTransaction().begin();
             PersonDetails personDetails = new PersonDetails(null,null,null,null,null, null);
-            PersonEntity person = new PersonEntity(null, "user1", "user1", Role.USER, personDetails);
+            PersonEntity person = new PersonEntity(null, "user1", "user1",
+                                                   Role.ROLE_USER, personDetails);
             personDetails.setPerson(person);
 
             em.persist(person);
 
-            em.persist(new PersonEntity(null, "user2", "user2",Role.USER, null));
-            em.persist(new PersonEntity(null, "user3", "user3",Role.USER, null));
-            em.persist(new PersonEntity(null, "user4", "user4",Role.USER, null));
-            em.persist(new PersonEntity(null, "user5", "user5",Role.USER, null));
-            em.persist(new PersonEntity(null, "ADMIN", "ADMIN", ADMIN, null));
-            em.persist(new PersonEntity(null, "user6", "user6", Role.USER, null));
-            em.persist(new PersonEntity(null, "user7", "user7",Role.USER, null));
-            em.persist(new PersonEntity(null, "user8", "user8",Role.USER, null));
-            em.persist(new PersonEntity(null, "user9", "user9",Role.USER, null));
-            em.persist(new PersonEntity(null, "user10", "user10",Role.USER, null));
-            em.persist(new PersonEntity(null, "ADMIN2", "ADMIN2", ADMIN, null));
+            em.persist(new PersonEntity(null, "user2", "user2",Role.ROLE_USER, null));
+            em.persist(new PersonEntity(null, "user3", "user3",Role.ROLE_USER, null));
+            em.persist(new PersonEntity(null, "user4", "user4",Role.ROLE_USER, null));
+            em.persist(new PersonEntity(null, "user5", "user5",Role.ROLE_USER, null));
+            em.persist(new PersonEntity(null, "ADMIN", "ADMIN", Role.ROLE_ADMIN, null));
+            em.persist(new PersonEntity(null, "user6", "user6", Role.ROLE_USER, null));
+            em.persist(new PersonEntity(null, "user7", "user7",Role.ROLE_USER, null));
+            em.persist(new PersonEntity(null, "user8", "user8",Role.ROLE_USER, null));
+            em.persist(new PersonEntity(null, "user9", "user9",Role.ROLE_USER, null));
+            em.persist(new PersonEntity(null, "user10", "user10",Role.ROLE_USER, null));
+            em.persist(new PersonEntity(null, "ADMIN2", "ADMIN2", Role.ROLE_ADMIN, null));
 
             em.getTransaction().commit();
             em.clear();
@@ -83,7 +82,7 @@ public class PersonTest {
         CriteriaQuery<PersonEntity> criteria = cb.createQuery(PersonEntity.class);
         Root<PersonEntity> personRoot = criteria.from(PersonEntity.class);
         criteria.select(personRoot)
-                .where(cb.equal(personRoot.get("role"), USER));
+                .where(cb.equal(personRoot.get("role"), Role.ROLE_USER));
         List<PersonEntity> personList = em.createQuery(criteria).getResultList();
         personList.forEach(System.out::println);
 

@@ -63,9 +63,9 @@ public class BookingController {
             Integer quantity = Integer.valueOf(
                     request.getParameter("quantity"));
             int sum = price * quantity;
-            request.setAttribute("totalprice",sum);
+            request.setAttribute("result",sum);
         }
-        return "neworder";
+        return "redirect:/basket";
     }
 
     //read

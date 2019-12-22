@@ -5,6 +5,7 @@ import com.github.hib.dao.converters.CategoryConverter;
 import com.github.hib.dao.converters.ItemConverter;
 import com.github.hib.entity.CategoryEntity;
 import com.github.hib.entity.ItemEntity;
+import com.github.hib.repository.CategoryRepository;
 import com.github.hib.repository.ItemRepository;
 import com.github.hib.util.EntityManagerUtil;
 import com.github.model.Item;
@@ -35,33 +36,32 @@ public class DefaultItemDao implements ItemDao {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     public DefaultItemDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
     public Item createItem(Item item1, Integer idCategory) {
+
         ItemEntity itemEntity = ItemConverter.toEntity(item1);
         itemEntity.setId(item1.getId());
         itemEntity.setName(item1.getItemName());
         itemEntity.setDescription(item1.getItemDescription());
         itemEntity.setQuantity(item1.getItemQuantity());
         itemEntity.setPrice(item1.getPriceForOne());
-        //itemEntity.setCategory(CategoryConverter.toEntity(item1
-        // .getItemCategory()));
 
-
-        final Session session = sessionFactory.getCurrentSession();
-        CategoryEntity category = (CategoryEntity) session.createQuery(
-                "from CategoryEntity c where c.idCategory =:idCategory")
-                                                          .setParameter(
-                                                                  "idCategory",
-                                                                  idCategory)
-                                                          .getSingleResult();
+//        final Session session = sessionFactory.getCurrentSession();
+//        CategoryEntity category =  session.get(CategoryEntity.class,idCategory);
+        CategoryEntity category =categoryRepository.getOne(idCategory);
         itemEntity.setCategory(category);
 
+
         category.getItems().add(itemEntity);
-        session.save(itemEntity);
+        itemRepository.save(itemEntity);
+        //session.save(itemEntity);
         return ItemConverter.fromEntity(itemEntity);
     }
 
@@ -79,9 +79,11 @@ public class DefaultItemDao implements ItemDao {
 
     @Override
     public Item readItem(Integer id) {
-        final ItemEntity itemEntity = sessionFactory.getCurrentSession()
-                                                    .get(ItemEntity.class, id);
-        return ItemConverter.fromEntity(itemEntity);
+      return   ItemConverter.fromEntity(itemRepository.getOne(id));
+//        final ItemEntity itemEntity = sessionFactory.getCurrentSession()
+//                                                    .get(ItemEntity.class, id);
+//        return ItemConverter.fromEntity(itemEntity);
+
     }
 
     @Override

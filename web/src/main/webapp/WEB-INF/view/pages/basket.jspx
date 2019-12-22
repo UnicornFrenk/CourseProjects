@@ -35,6 +35,7 @@
             <td>${item.name}</td>
 
         </tr>
+        </c:forEach>
         <tr>
             <td>totalprice</td>
         </tr>
