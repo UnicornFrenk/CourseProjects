@@ -22,7 +22,7 @@
 
     <properties>
         <hibernate.version>5.4.6.Final</hibernate.version>
-        <hibernate-core.version>5.4.5.Final</hibernate-core.version>
+        <hibernate-core.version>5.4.24.Final</hibernate-core.version>
         <ehcache.version>2.6.11</ehcache.version>
     </properties>
 
